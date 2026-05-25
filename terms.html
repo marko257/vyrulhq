@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy & Terms — Vyrul HQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07070a;
+      --bg-2: #0e0e13;
+      --accent: #d4ff3a;
+      --fg-1: #f0f0f5;
+      --fg-2: #9898b0;
+      --fg-3: #5e5e78;
+      --line: rgba(255,255,255,0.06);
+      --pad-x: clamp(20px, 5vw, 80px);
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg-1);
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Nav ── */
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7,7,10,0.92);
+      backdrop-filter: blur(12px);
+    }
+    .nav {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 var(--pad-x);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--fg-1);
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-back {
+      font-size: 14px;
+      color: var(--fg-2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-back:hover { color: var(--fg-1); text-decoration: none; }
+
+    /* ── Content ── */
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px var(--pad-x) 120px;
+    }
+
+    .page-header {
+      margin-bottom: 56px;
+    }
+    .page-header p {
+      font-size: 13px;
+      color: var(--fg-3);
+      margin-top: 10px;
+      font-family: 'Space Grotesk', monospace;
+      letter-spacing: 0.04em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      font-size: clamp(28px, 5vw, 40px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      line-height: 1.15;
+    }
+
+    .toc {
+      background: var(--bg-2);
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      padding: 24px 28px;
+      margin-bottom: 56px;
+    }
+    .toc h2 {
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: var(--fg-3);
+      margin-bottom: 14px;
+    }
+    .toc ol {
+      padding-left: 18px;
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+    .toc li { font-size: 14.5px; }
+    .toc a { color: var(--fg-2); }
+    .toc a:hover { color: var(--accent); text-decoration: none; }
+
+    .doc-section {
+      margin-bottom: 56px;
+    }
+
+    .doc-section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      margin-bottom: 20px;
+      padding-top: 8px;
+      border-top: 1px solid var(--line);
+      padding-top: 28px;
+      color: var(--fg-1);
+    }
+
+    .doc-section h3 {
+      font-size: 15px;
+      font-weight: 600;
+      color: var(--fg-2);
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 28px 0 10px;
+    }
+
+    .doc-section p {
+      color: var(--fg-2);
+      font-size: 15.5px;
+      margin-bottom: 16px;
+    }
+
+    .doc-section ul {
+      color: var(--fg-2);
+      font-size: 15.5px;
+      padding-left: 20px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+      margin-bottom: 16px;
+    }
+
+    .doc-section ul li::marker { color: var(--accent); }
+
+    .highlight-box {
+      background: rgba(212,255,58,0.05);
+      border: 1px solid rgba(212,255,58,0.15);
+      border-radius: 8px;
+      padding: 18px 22px;
+      color: var(--fg-2);
+      font-size: 14.5px;
+      margin: 20px 0;
+    }
+    .highlight-box strong { color: var(--fg-1); }
+
+    .divider {
+      height: 1px;
+      background: var(--line);
+      margin: 56px 0;
+    }
+
+    /* ── Footer ── */
+    .page-footer {
+      border-top: 1px solid var(--line);
+      padding: 32px var(--pad-x);
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: var(--fg-3);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-wrap">
+    <div class="nav">
+      <div class="nav-logo">VYRUL<span>HQ</span></div>
+      <a href="/" class="nav-back">← Back to site</a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <div class="page-header">
+      <h1>Privacy Policy &amp; Terms of Service</h1>
+      <p>Last updated: May 25, 2025</p>
+    </div>
+
+    <div class="toc">
+      <h2>On this page</h2>
+      <ol>
+        <li><a href="#privacy">Privacy Policy</a></li>
+        <li><a href="#terms">Terms of Service</a></li>
+        <li><a href="#contact">Contact</a></li>
+      </ol>
+    </div>
+
+    <!-- ── Privacy Policy ── -->
+    <section class="doc-section" id="privacy">
+      <h2>Privacy Policy</h2>
+
+      <p>Vyrul HQ ("we", "us", "our") operates vyrulhq.com and provides managed short-form content services. This policy explains what data we collect, why we collect it, and how we handle it.</p>
+
+      <div class="highlight-box">
+        <strong>The short version:</strong> We collect only what we need to run your account and deliver our service. We don't sell your data. We don't share it with third parties except where required to deliver the service (e.g., cloud hosting, payment processing).
+      </div>
+
+      <h3>Information We Collect</h3>
+      <ul>
+        <li><strong>Contact information</strong> — name, email address, and phone number you provide when booking a call or signing up.</li>
+        <li><strong>Business information</strong> — your brand name, social media handles, and content goals shared during onboarding.</li>
+        <li><strong>Footage and content</strong> — raw video files you upload for clipping; these are stored securely and used solely to produce your deliverables.</li>
+        <li><strong>Usage data</strong> — standard web analytics (page views, referral source, device type) collected via Vercel Analytics. No personally identifiable information is included.</li>
+        <li><strong>Payment information</strong> — handled entirely by our payment processor (Stripe). We do not store card numbers or bank details.</li>
+      </ul>
+
+      <h3>How We Use It</h3>
+      <ul>
+        <li>To deliver the service — edit clips, post content, and manage your accounts per our agreement.</li>
+        <li>To communicate with you — updates, reports, invoices, and support.</li>
+        <li>To improve service quality — reviewing performance data to inform strategy.</li>
+        <li>To comply with legal obligations — if required by law or legal process.</li>
+      </ul>
+
+      <h3>Data Retention</h3>
+      <p>We retain your data for as long as your account is active or as needed to provide services. If you cancel, we delete your footage and personal data within 60 days upon written request. Billing records are retained for 7 years as required by law.</p>
+
+      <h3>Your Rights</h3>
+      <p>You may request access to, correction of, or deletion of your personal data at any time by contacting us at <a href="mailto:hello@vyrulhq.com">hello@vyrulhq.com</a>. We will respond within 30 days.</p>
+
+      <h3>Cookies</h3>
+      <p>This site uses minimal cookies — session cookies required for functionality only. We do not use tracking cookies or advertising pixels.</p>
+
+      <h3>Third-Party Services</h3>
+      <ul>
+        <li><strong>Vercel</strong> — hosting and analytics</li>
+        <li><strong>Stripe</strong> — payment processing</li>
+        <li><strong>Supabase</strong> — data storage (client portal)</li>
+        <li><strong>TikTok, Instagram, YouTube</strong> — platforms we post to on your behalf</li>
+      </ul>
+      <p>Each third party has its own privacy policy governing their data practices.</p>
+
+      <h3>Security</h3>
+      <p>We use industry-standard security practices: encrypted data in transit (HTTPS), encrypted storage, access controls, and regular backups. No method of transmission over the internet is 100% secure, and we cannot guarantee absolute security.</p>
+
+      <h3>Changes to This Policy</h3>
+      <p>We may update this policy from time to time. We'll post the revised version here with an updated date. Continued use of our services after changes constitutes acceptance.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <!-- ── Terms of Service ── -->
+    <section class="doc-section" id="terms">
+      <h2>Terms of Service</h2>
+
+      <p>By engaging Vyrul HQ for services, you agree to the following terms. Please read them carefully before signing a service agreement or making payment.</p>
+
+      <h3>Services</h3>
+      <p>Vyrul HQ provides managed short-form content services on a monthly retainer basis. Deliverables (clip volume, platforms, and inclusions) are defined in your signed service agreement. We reserve the right to refuse service to anyone for any reason.</p>
+
+      <h3>Payment</h3>
+      <ul>
+        <li>All retainers are billed monthly or quarterly in advance.</li>
+        <li>Payments are due on the start date of each billing period.</li>
+        <li>Late payments may result in a pause of service delivery.</li>
+        <li>All fees are in USD. We do not offer refunds for completed billing periods.</li>
+      </ul>
+
+      <h3>Content Ownership</h3>
+      <ul>
+        <li>You retain full ownership of all raw footage you provide to us.</li>
+        <li>You retain ownership of all finished clips we produce for you.</li>
+        <li>By submitting footage, you grant Vyrul HQ a limited license to edit, modify, and post that content as part of our services.</li>
+        <li>We may use anonymized performance metrics and general outcomes (e.g., "60M views in 90 days") in our marketing materials unless you opt out in writing.</li>
+        <li>We will not use your footage, brand, or likeness in any other context without explicit written permission.</li>
+      </ul>
+
+      <h3>Client Responsibilities</h3>
+      <ul>
+        <li>Providing raw footage on time, per the agreed submission schedule.</li>
+        <li>Granting necessary access to social media accounts for posting.</li>
+        <li>Ensuring all footage you submit is owned by you or properly licensed.</li>
+        <li>Not submitting content that is illegal, defamatory, or violates platform terms of service.</li>
+      </ul>
+
+      <h3>Cancellation</h3>
+      <ul>
+        <li>Either party may cancel with 30 days written notice.</li>
+        <li>Monthly retainers can be cancelled before the next billing cycle; quarterly retainers are non-refundable.</li>
+        <li>We will deliver all completed clips through the end of the paid period.</li>
+      </ul>
+
+      <h3>Limitation of Liability</h3>
+      <p>Vyrul HQ is not responsible for platform algorithm changes, account suspensions imposed by third-party platforms, or specific growth outcomes. We deliver a managed service; organic performance depends on factors outside our control. Our total liability for any claim shall not exceed the amount paid by you in the prior 30 days.</p>
+
+      <h3>Platform Compliance</h3>
+      <p>We operate in accordance with TikTok, Instagram, and YouTube community guidelines and terms of service. We reserve the right to decline producing or posting content that we reasonably believe violates platform policies.</p>
+
+      <h3>Confidentiality</h3>
+      <p>Both parties agree to keep the terms of the service agreement and any proprietary business information confidential. This does not apply to information that is publicly available or independently developed.</p>
+
+      <h3>Governing Law</h3>
+      <p>These terms are governed by the laws of the State of Nevada, United States, without regard to conflict of law principles. Any disputes shall be resolved through binding arbitration in Clark County, Nevada.</p>
+
+      <h3>Entire Agreement</h3>
+      <p>These terms, together with your signed service agreement, constitute the entire agreement between you and Vyrul HQ. They supersede any prior agreements, representations, or understandings.</p>
+    </section>
+
+    <div class="divider"></div>
+
+    <section class="doc-section" id="contact">
+      <h2>Questions?</h2>
+      <p>If you have any questions about this policy or these terms, reach out directly:</p>
+      <p><a href="mailto:hello@vyrulhq.com">hello@vyrulhq.com</a></p>
+    </section>
+
+  </div>
+
+  <div class="page-footer">
+    <span>© <script>document.write(new Date().getFullYear())</script> Vyrul HQ · All rights reserved</span>
+    <a href="/" style="color: var(--fg-3);">← Back to vyrulhq.com</a>
+  </div>
+
+</body>
+</html>
