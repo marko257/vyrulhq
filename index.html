@@ -210,6 +210,7 @@ p { margin: 0; }
 @media (max-width: 800px) {
   .nav-links { display: none; }
   .nav-wrap .btn-primary { display: none; }
+  .nav-wrap .btn-ghost { display: none; }
   .nav-menu-btn { display: flex; }
 }
 
@@ -1204,6 +1205,7 @@ function Nav() {
             <a href="#packages">Packages</a>
             <a href="#faq">FAQ</a>
           </nav>
+          <a href="/portal" className="btn btn-ghost">Client Login</a>
           <a href="#cta" className="btn btn-primary">Book a Call {Icon.arrow}</a>
           <button
             className={`nav-menu-btn${menuOpen ? ' open' : ''}`}
@@ -1222,6 +1224,9 @@ function Nav() {
           <a href="#packages" onClick={closeMenu}>Packages</a>
           <a href="#faq" onClick={closeMenu}>FAQ</a>
         </nav>
+        <a href="/portal" className="btn btn-ghost btn-lg" onClick={closeMenu}>
+          Client Login
+        </a>
         <a href="#cta" className="btn btn-primary btn-lg" onClick={closeMenu}>
           Book a Free Call {Icon.arrow}
         </a>
@@ -1649,7 +1654,10 @@ function FooterCTA() {
         </div>
         <h2>Done managing clippers.<br />Done chasing consistency.</h2>
         <p>Let's build the system once and run it for you from here.</p>
-        <a href="mailto:hello@vyrulhq.com" className="btn btn-primary btn-lg">Book a Free Call {Icon.arrow}</a>
+        <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
+          <a href="mailto:hello@vyrulhq.com" className="btn btn-primary btn-lg">Book a Free Call {Icon.arrow}</a>
+          <a href="/portal" className="btn btn-ghost btn-lg">Client Login</a>
+        </div>
         <div className="foot-cta-meta">
           <span>~30 MIN</span><span>·</span><span>FREE STRATEGY AUDIT</span><span>·</span><span>NO COMMITMENT</span>
         </div>
