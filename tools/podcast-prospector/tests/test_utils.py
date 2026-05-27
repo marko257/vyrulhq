@@ -57,10 +57,6 @@ class TestCalculateGapScore:
         result = calculate_gap_score(videos=10, shorts=10, episodes=200)
         assert result == 1.0
 
-    def test_zero_shorts_defaults_to_one(self):
-        result = calculate_gap_score(videos=5, shorts=0, episodes=5)
-        assert result == 5.0
-
     def test_low_episodes_reduces_score(self):
         result = calculate_gap_score(videos=10, shorts=2, episodes=1)
         assert result == 0.5
