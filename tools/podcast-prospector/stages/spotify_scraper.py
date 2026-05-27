@@ -21,7 +21,12 @@ def _start_run(keywords: list[str], max_emails: int) -> str:
     payload = {
         'keywords': keywords,
         'location': '',
-        'customDomains': [],  # no domain filter — capture all email types
+        'customDomains': [
+            '@gmail.com', '@yahoo.com', '@outlook.com', '@hotmail.com',
+            '@icloud.com', '@me.com', '@protonmail.com', '@hey.com',
+            # custom domains — actor matches any string so use a short suffix
+            '.com', '.co', '.io', '.fm', '.net', '.org',
+        ],
         'maxEmails': max_emails,
     }
     resp = requests.post(
