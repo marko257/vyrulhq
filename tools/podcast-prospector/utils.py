@@ -2,9 +2,11 @@ import re
 from typing import Optional
 from urllib.parse import urlparse
 
+from config import YOUTUBE_SHORTS_MAX_SECONDS
+
 
 def parse_duration_seconds(iso_duration: str) -> int:
-    match = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?', iso_duration)
+    match = re.match(r'PT(?:(\d+)H)?(?:(\d+)M)?(?:(\d+)S)?$', iso_duration)
     if not match:
         return 0
     hours = int(match.group(1) or 0)
@@ -14,7 +16,7 @@ def parse_duration_seconds(iso_duration: str) -> int:
 
 
 def is_short(duration_seconds: int, title: str) -> bool:
-    if duration_seconds <= 60:
+    if duration_seconds <= YOUTUBE_SHORTS_MAX_SECONDS:
         return True
     return '#shorts' in title.lower()
 

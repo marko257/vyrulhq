@@ -2,78 +2,92 @@ import pytest
 from utils import parse_duration_seconds, is_short, calculate_gap_score, extract_domain
 
 
-# --- parse_duration_seconds ---
+class TestParseDurationSeconds:
+    def test_parse_hours_only(self):
+        assert parse_duration_seconds('PT2H') == 7200
 
-def test_parse_seconds_only():
-    assert parse_duration_seconds('PT45S') == 45
+    def test_parse_minutes_only(self):
+        assert parse_duration_seconds('PT30M') == 1800
 
-def test_parse_minutes_and_seconds():
-    assert parse_duration_seconds('PT1M30S') == 90
+    def test_parse_seconds_only(self):
+        assert parse_duration_seconds('PT45S') == 45
 
-def test_parse_hours_minutes_seconds():
-    assert parse_duration_seconds('PT1H2M3S') == 3723
+    def test_parse_hours_minutes_seconds(self):
+        assert parse_duration_seconds('PT1H30M45S') == 5445
 
-def test_parse_minutes_only():
-    assert parse_duration_seconds('PT5M') == 300
+    def test_parse_zero_duration(self):
+        assert parse_duration_seconds('PT0S') == 0
 
-def test_parse_empty_returns_zero():
-    assert parse_duration_seconds('PT') == 0
+    def test_parse_invalid_format_returns_zero(self):
+        assert parse_duration_seconds('INVALID') == 0
 
+    def test_parse_empty_string_returns_zero(self):
+        assert parse_duration_seconds('') == 0
 
-# --- is_short ---
-
-def test_short_by_duration_under_60():
-    assert is_short(duration_seconds=45, title='Normal title') is True
-
-def test_short_at_exactly_60_seconds():
-    assert is_short(duration_seconds=60, title='Normal title') is True
-
-def test_not_short_at_61_seconds():
-    assert is_short(duration_seconds=61, title='Normal title') is False
-
-def test_short_by_hashtag_regardless_of_duration():
-    assert is_short(duration_seconds=300, title='My video #Shorts') is True
-
-def test_short_by_lowercase_hashtag():
-    assert is_short(duration_seconds=300, title='My video #shorts') is True
-
-def test_not_short_long_video_no_hashtag():
-    assert is_short(duration_seconds=3600, title='Full podcast episode') is False
+    def test_parse_invalid_string_returns_zero(self):
+        assert parse_duration_seconds('PT5M_GARBAGE') == 0
 
 
-# --- calculate_gap_score ---
+class TestIsShort:
+    def test_duration_under_60_seconds_is_short(self):
+        assert is_short(30, 'random title') is True
 
-def test_high_videos_zero_shorts_gives_max():
-    assert calculate_gap_score(videos=10, shorts=0, episodes=100) == 10.0
+    def test_duration_exactly_60_seconds_is_short(self):
+        assert is_short(60, 'random title') is True
 
-def test_equal_videos_and_shorts_gives_one():
-    assert calculate_gap_score(videos=10, shorts=10, episodes=100) == 1.0
+    def test_duration_over_60_without_hashtag_is_not_short(self):
+        assert is_short(120, 'random title') is False
 
-def test_low_episode_count_dampens_score():
-    assert calculate_gap_score(videos=10, shorts=0, episodes=5) == pytest.approx(5.0)
+    def test_duration_over_60_with_shorts_hashtag_is_short(self):
+        assert is_short(120, 'Check this out #shorts') is True
 
-def test_zero_videos_gives_zero():
-    assert calculate_gap_score(videos=0, shorts=0, episodes=100) == 0.0
+    def test_duration_over_60_with_shorts_hashtag_mixed_case_is_short(self):
+        assert is_short(120, 'Check this out #SHORTS') is True
 
-def test_episode_count_caps_multiplier_at_one():
-    score_100 = calculate_gap_score(videos=10, shorts=0, episodes=100)
-    score_200 = calculate_gap_score(videos=10, shorts=0, episodes=200)
-    assert score_100 == score_200
+    def test_duration_zero_is_short(self):
+        assert is_short(0, 'random title') is True
 
 
-# --- extract_domain ---
+class TestCalculateGapScore:
+    def test_high_ratio_low_maturity(self):
+        result = calculate_gap_score(videos=10, shorts=1, episodes=5)
+        assert result == 5.0
 
-def test_extract_domain_simple():
-    assert extract_domain('https://mypodcast.com') == 'mypodcast.com'
+    def test_low_ratio_high_maturity(self):
+        result = calculate_gap_score(videos=10, shorts=10, episodes=200)
+        assert result == 1.0
 
-def test_extract_domain_strips_www():
-    assert extract_domain('https://www.mypodcast.com') == 'mypodcast.com'
+    def test_zero_shorts_defaults_to_one(self):
+        result = calculate_gap_score(videos=5, shorts=0, episodes=5)
+        assert result == 5.0
 
-def test_extract_domain_strips_path():
-    assert extract_domain('https://mypodcast.com/episodes/123') == 'mypodcast.com'
+    def test_low_episodes_reduces_score(self):
+        result = calculate_gap_score(videos=10, shorts=2, episodes=1)
+        assert result == 0.5
 
-def test_extract_domain_none_input():
-    assert extract_domain(None) is None
+    def test_max_maturity_at_100_episodes(self):
+        result = calculate_gap_score(videos=10, shorts=2, episodes=100)
+        assert result == 5.0
 
-def test_extract_domain_empty_string():
-    assert extract_domain('') is None
+
+class TestExtractDomain:
+    def test_extract_domain_from_url(self):
+        assert extract_domain('https://www.example.com') == 'example.com'
+
+    def test_extract_domain_removes_www(self):
+        assert extract_domain('https://www.github.com/user/repo') == 'github.com'
+
+    def test_extract_domain_without_www(self):
+        assert extract_domain('https://github.com/user/repo') == 'github.com'
+
+    def test_extract_domain_none_input(self):
+        assert extract_domain(None) is None
+
+    def test_extract_domain_empty_string(self):
+        assert extract_domain('') is None
+
+    def test_extract_domain_invalid_url(self):
+        assert extract_domain('not a url') is None
+
+    def test_extract_domain_with_port(self):
+        assert extract_domain('https://localhost:8080') == 'localhost'
