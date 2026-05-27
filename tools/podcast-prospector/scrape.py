@@ -10,6 +10,19 @@ from utils import calculate_gap_score
 from writer import write_csv
 
 
+def _retry_find_channel(youtube, name: str, retries: int = 3):
+    for attempt in range(retries):
+        try:
+            return find_channel(youtube, podcast_name=name, podcast_website='')
+        except Exception as exc:
+            if '429' in str(exc) and attempt < retries - 1:
+                wait = 60 * (attempt + 1)
+                click.echo(f'\n  [rate limited, waiting {wait}s...]', nl=False)
+                time.sleep(wait)
+            else:
+                raise
+
+
 @click.command()
 @click.option('--keywords', default='entrepreneurship,coaching,marketing,investing,business,founder',
               show_default=True, help='Comma-separated Spotify search keywords')
@@ -32,7 +45,7 @@ def main(keywords: str, max_emails: int, output: str):
         click.echo(f'[{i}/{len(leads)}] {name}', nl=False)
 
         try:
-            channel = find_channel(youtube, podcast_name=name, podcast_website='')
+            channel = _retry_find_channel(youtube, name)
             if not channel:
                 click.echo(' — no YouTube match, skipping')
                 continue
@@ -46,7 +59,7 @@ def main(keywords: str, max_emails: int, output: str):
             score = calculate_gap_score(
                 videos=gap['yt_videos_90d'],
                 shorts=gap['yt_shorts_90d'],
-                episodes=50,  # episode count not available from Spotify scraper
+                episodes=50,
             )
 
             prospects.append({
@@ -64,7 +77,7 @@ def main(keywords: str, max_emails: int, output: str):
         except Exception as exc:
             click.echo(f' — error ({type(exc).__name__}: {exc}), skipping')
         finally:
-            time.sleep(0.5)
+            time.sleep(2)  # YouTube search quota: ~30 req/min safe limit
 
     prospects.sort(key=lambda p: p['gap_score'], reverse=True)
     click.echo(f'\n{len(prospects)} qualified prospects found.')

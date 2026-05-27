@@ -72,14 +72,27 @@ def _deduplicate(items: list[dict]) -> list[dict]:
     seen_emails = set()
     results = []
     for item in items:
+        url = item.get('url', '')
+        # Skip individual episode URLs — we want podcast show pages only
+        if '/episode/' in url:
+            continue
+
         email = (item.get('email') or '').strip().lower()
         if not email or email in seen_emails:
             continue
         seen_emails.add(email)
+
+        name = item.get('title', '').strip()
+        # Strip Spotify-appended suffixes that break YouTube matching
+        for suffix in (' | Podcast on Spotify', ' • A podcast on Spotify', ' - Podcast on Spotify'):
+            if name.endswith(suffix):
+                name = name[:-len(suffix)].strip()
+                break
+
         results.append({
-            'podcast_name': item.get('title', '').strip(),
+            'podcast_name': name,
             'email': email,
-            'spotify_url': item.get('url', ''),
+            'spotify_url': url,
             'keyword': item.get('keyword', ''),
         })
     return results
