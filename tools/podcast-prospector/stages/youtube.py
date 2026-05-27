@@ -52,8 +52,11 @@ def get_shorts_gap(youtube, uploads_playlist_id: str) -> dict:
     cutoff = datetime.now(timezone.utc) - timedelta(days=LOOKBACK_DAYS)
     recent_video_ids = []
     next_page_token = None
+    pages_fetched = 0
+    max_pages = 20  # safety cap — ~1000 videos max
 
-    while True:
+    # YouTube returns uploads newest-first; stop as soon as we see a video older than cutoff
+    while pages_fetched < max_pages:
         kwargs = {
             'playlistId': uploads_playlist_id,
             'part': 'contentDetails',
@@ -63,6 +66,7 @@ def get_shorts_gap(youtube, uploads_playlist_id: str) -> dict:
             kwargs['pageToken'] = next_page_token
 
         playlist_result = youtube.playlistItems().list(**kwargs).execute()
+        pages_fetched += 1
 
         for item in playlist_result.get('items', []):
             published_str = item['contentDetails'].get('videoPublishedAt', '')

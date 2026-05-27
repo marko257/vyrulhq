@@ -88,3 +88,31 @@ def test_get_shorts_gap_returns_zeros_for_empty_channel():
     yt = make_yt(playlist_items=[], video_items=[])
     gap = get_shorts_gap(yt, uploads_playlist_id='UU123')
     assert gap == {'yt_videos_90d': 0, 'yt_shorts_90d': 0}
+
+
+def test_get_shorts_gap_handles_multiple_pages():
+    now = datetime.now(timezone.utc)
+    recent = (now - timedelta(days=10)).strftime('%Y-%m-%dT%H:%M:%SZ')
+
+    page1_items = [
+        {'contentDetails': {'videoId': 'v1', 'videoPublishedAt': recent}},
+    ]
+    page2_items = [
+        {'contentDetails': {'videoId': 'v2', 'videoPublishedAt': recent}},
+    ]
+    video_items = [
+        {'id': 'v1', 'contentDetails': {'duration': 'PT45S'}, 'snippet': {'title': 'Short 1'}},
+        {'id': 'v2', 'contentDetails': {'duration': 'PT20M'}, 'snippet': {'title': 'Long ep'}},
+    ]
+
+    yt = MagicMock()
+    # First page returns nextPageToken, second page doesn't
+    yt.playlistItems.return_value.list.return_value.execute.side_effect = [
+        {'items': page1_items, 'nextPageToken': 'page2token'},
+        {'items': page2_items, 'nextPageToken': None},
+    ]
+    yt.videos.return_value.list.return_value.execute.return_value = {'items': video_items}
+
+    gap = get_shorts_gap(yt, uploads_playlist_id='UU123')
+    assert gap['yt_videos_90d'] == 2
+    assert gap['yt_shorts_90d'] == 1
