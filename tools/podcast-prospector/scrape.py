@@ -20,7 +20,8 @@ def _retry_find_channel(youtube, name: str, retries: int = 3):
             return find_channel(youtube, podcast_name=name, podcast_website='')
         except Exception as exc:
             msg = str(exc)
-            if 'quotaExceeded' in msg:
+            # Both daily and per-minute limits return rateLimitExceeded — tell them apart by message
+            if 'per day' in msg or 'quotaExceeded' in msg:
                 raise QuotaExhausted('YouTube daily quota exhausted') from exc
             if ('rateLimitExceeded' in msg or '429' in msg) and attempt < retries - 1:
                 wait = 30 * (attempt + 1)
