@@ -1,4 +1,5 @@
 from unittest.mock import patch, Mock
+import requests
 from stages.extract_email import extract_email
 
 RSS_WITH_ITUNES_EMAIL = '''<?xml version="1.0" encoding="UTF-8"?>
@@ -28,8 +29,10 @@ RSS_NO_EMAIL = '''<?xml version="1.0" encoding="UTF-8"?>
 def make_response(text, status=200):
     m = Mock()
     m.text = text
+    m.content = text.encode('utf-8')
     m.status_code = status
-    m.raise_for_status = Mock()
+    if status >= 400:
+        m.raise_for_status.side_effect = requests.exceptions.HTTPError(response=m)
     return m
 
 
@@ -49,7 +52,12 @@ def test_returns_none_when_no_email():
 
 
 def test_returns_none_on_network_error():
-    with patch('requests.get', side_effect=Exception('Connection refused')):
+    with patch('requests.get', side_effect=requests.exceptions.RequestException('Connection refused')):
+        assert extract_email('http://fake.rss/feed') is None
+
+
+def test_returns_none_on_http_error():
+    with patch('requests.get', return_value=make_response('', status=404)):
         assert extract_email('http://fake.rss/feed') is None
 
 
