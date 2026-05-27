@@ -32,14 +32,14 @@ def main(categories: str, limit: int, output: str):
         click.echo(f'[{i}/{len(podcasts)}] {name}', nl=False)
 
         try:
-            email = extract_email(podcast['rss_url'])
-            if not email:
-                click.echo(' — no email, skipping')
-                continue
-
             channel = find_channel(youtube, podcast_name=name, podcast_website=podcast['website'])
             if not channel:
                 click.echo(' — no YouTube match, skipping')
+                continue
+
+            email = extract_email(podcast['rss_url']) or channel.get('business_email')
+            if not email:
+                click.echo(' — no email, skipping')
                 continue
 
             gap = get_shorts_gap(youtube, uploads_playlist_id=channel['uploads_playlist_id'])

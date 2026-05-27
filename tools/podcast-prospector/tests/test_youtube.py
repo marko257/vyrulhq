@@ -33,6 +33,7 @@ def test_find_channel_matches_by_domain():
         'id': 'UC123',
         'brandingSettings': {'channel': {'website': 'https://test.com/about'}},
         'contentDetails': {'relatedPlaylists': {'uploads': 'UU123'}},
+        'snippet': {'description': ''},
     }]
     yt = make_yt(search_items=search_items, channel_items=channel_items)
     result = find_channel(yt, podcast_name='Test Podcast', podcast_website='https://test.com')
@@ -40,7 +41,21 @@ def test_find_channel_matches_by_domain():
         'channel_id': 'UC123',
         'channel_url': 'https://www.youtube.com/channel/UC123',
         'uploads_playlist_id': 'UU123',
+        'business_email': None,
     }
+
+
+def test_find_channel_extracts_email_from_description():
+    search_items = [{'id': {'channelId': 'UC456'}, 'snippet': {'title': 'Test Podcast'}}]
+    channel_items = [{
+        'id': 'UC456',
+        'brandingSettings': {'channel': {'website': 'https://test.com'}},
+        'contentDetails': {'relatedPlaylists': {'uploads': 'UU456'}},
+        'snippet': {'description': 'For business enquiries: host@testpodcast.com'},
+    }]
+    yt = make_yt(search_items=search_items, channel_items=channel_items)
+    result = find_channel(yt, podcast_name='Test Podcast', podcast_website='https://test.com')
+    assert result['business_email'] == 'host@testpodcast.com'
 
 
 def test_find_channel_returns_none_on_domain_mismatch():
@@ -49,6 +64,7 @@ def test_find_channel_returns_none_on_domain_mismatch():
         'id': 'UC999',
         'brandingSettings': {'channel': {'website': 'https://unrelated.com'}},
         'contentDetails': {'relatedPlaylists': {'uploads': 'UU999'}},
+        'snippet': {'description': ''},
     }]
     yt = make_yt(search_items=search_items, channel_items=channel_items)
     result = find_channel(yt, podcast_name='Test Podcast', podcast_website='https://test.com')

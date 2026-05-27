@@ -1,9 +1,12 @@
 from __future__ import annotations
 
+import re
 from datetime import datetime, timezone, timedelta
 from typing import Optional
 from utils import parse_duration_seconds, is_short, extract_domain
 from config import LOOKBACK_DAYS
+
+_EMAIL_RE = re.compile(r'[a-zA-Z0-9._%+\-]+@[a-zA-Z0-9.\-]+\.[a-zA-Z]{2,}')
 
 
 def find_channel(youtube, podcast_name: str, podcast_website: str) -> Optional[dict]:
@@ -24,7 +27,7 @@ def find_channel(youtube, podcast_name: str, podcast_website: str) -> Optional[d
 
         channel_result = youtube.channels().list(
             id=channel_id,
-            part='brandingSettings,contentDetails',
+            part='brandingSettings,contentDetails,snippet',
         ).execute()
 
         if not channel_result.get('items'):
@@ -41,10 +44,14 @@ def find_channel(youtube, podcast_name: str, podcast_website: str) -> Optional[d
             channel['contentDetails']['relatedPlaylists']['uploads']
         )
 
+        description = channel.get('snippet', {}).get('description', '')
+        email_match = _EMAIL_RE.search(description)
+
         match_dict = {
             'channel_id': channel_id,
             'channel_url': f'https://www.youtube.com/channel/{channel_id}',
             'uploads_playlist_id': uploads_playlist_id,
+            'business_email': email_match.group(0) if email_match else None,
         }
 
         # Domain match is high confidence — return immediately

@@ -8,3 +8,4 @@ CLAUDE.md
 .vercel
 tools/podcast-prospector/.env
 tools/podcast-prospector/prospects.csv
+prospects.csv
