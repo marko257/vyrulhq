@@ -1,5 +1,5 @@
 import requests
-from config import MIN_EPISODES, LISTEN_NOTES_BASE_URL
+from config import MIN_EPISODES, LISTEN_NOTES_BASE_URL, MAX_PAGES
 
 GENRE_SLUGS = {
     'business': 93,
@@ -16,8 +16,10 @@ def search_podcasts(categories: list[str], limit: int, api_key: str) -> list[dic
     genre_ids = [str(GENRE_SLUGS[c]) for c in categories if c in GENRE_SLUGS]
     results = []
     offset = 0
+    pages_fetched = 0
 
-    while len(results) < limit:
+    while len(results) < limit and pages_fetched < MAX_PAGES:
+        pages_fetched += 1
         params = {
             'q': 'podcast',
             'type': 'podcast',
@@ -33,7 +35,12 @@ def search_podcasts(categories: list[str], limit: int, api_key: str) -> list[dic
             params=params,
             timeout=15,
         )
-        response.raise_for_status()
+        try:
+            response.raise_for_status()
+        except requests.exceptions.HTTPError as exc:
+            raise RuntimeError(
+                f"Listen Notes API error {response.status_code}: {exc}"
+            ) from exc
         data = response.json()
 
         for item in data.get('results', []):
@@ -49,8 +56,11 @@ def search_podcasts(categories: list[str], limit: int, api_key: str) -> list[dic
             if len(results) >= limit:
                 break
 
-        if not data.get('next_offset') or not data.get('results'):
+        next_off = data.get('next_offset')
+        if next_off is None or not data.get('results'):
             break
-        offset = data['next_offset']
+        if next_off == offset:
+            break
+        offset = next_off
 
     return results[:limit]
