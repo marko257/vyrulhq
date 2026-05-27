@@ -3,7 +3,7 @@ import time
 import click
 from googleapiclient.discovery import build
 
-from config import LISTEN_NOTES_API_KEY, YOUTUBE_API_KEY
+from config import YOUTUBE_API_KEY
 from stages.discover import search_podcasts
 from stages.extract_email import extract_email
 from stages.youtube import find_channel, get_shorts_gap
@@ -24,7 +24,7 @@ def main(categories: str, limit: int, output: str):
     prospects = []
 
     click.echo(f'Discovering up to {limit} podcasts in: {", ".join(category_list)}')
-    podcasts = search_podcasts(categories=category_list, limit=limit, api_key=LISTEN_NOTES_API_KEY)
+    podcasts = search_podcasts(categories=category_list, limit=limit)
     click.echo(f'Found {len(podcasts)} podcasts. Processing...\n')
 
     for i, podcast in enumerate(podcasts, 1):
