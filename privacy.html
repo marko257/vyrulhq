@@ -1,0 +1,288 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Privacy Policy — Vyrul HQ</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --bg: #07070a;
+      --bg-2: #0e0e13;
+      --accent: #d4ff3a;
+      --fg-1: #f0f0f5;
+      --fg-2: #9898b0;
+      --fg-3: #5e5e78;
+      --line: rgba(255,255,255,0.06);
+      --pad-x: clamp(20px, 5vw, 80px);
+      --radius: 12px;
+    }
+
+    html { scroll-behavior: smooth; }
+
+    body {
+      background: var(--bg);
+      color: var(--fg-1);
+      font-family: 'Space Grotesk', system-ui, sans-serif;
+      font-size: 16px;
+      line-height: 1.7;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    /* ── Nav ── */
+    .nav-wrap {
+      position: sticky;
+      top: 0;
+      z-index: 100;
+      border-bottom: 1px solid var(--line);
+      background: rgba(7,7,10,0.92);
+      backdrop-filter: blur(12px);
+    }
+    .nav {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 0 var(--pad-x);
+      height: 64px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+    }
+    .nav-logo {
+      font-size: 18px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--fg-1);
+    }
+    .nav-logo span { color: var(--accent); }
+    .nav-back {
+      font-size: 14px;
+      color: var(--fg-2);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .nav-back:hover { color: var(--fg-1); text-decoration: none; }
+
+    /* ── Content ── */
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 64px var(--pad-x) 120px;
+    }
+
+    .page-header {
+      margin-bottom: 56px;
+    }
+    .page-header h1 {
+      font-size: clamp(28px, 5vw, 42px);
+      font-weight: 700;
+      letter-spacing: -0.03em;
+      color: var(--fg-1);
+      margin-bottom: 10px;
+    }
+    .page-header p {
+      font-size: 13px;
+      color: var(--fg-3);
+    }
+
+    /* ── Doc sections ── */
+    .doc-section {
+      margin-bottom: 48px;
+    }
+    .doc-section h2 {
+      font-size: 22px;
+      font-weight: 700;
+      letter-spacing: -0.02em;
+      color: var(--fg-1);
+      margin-bottom: 16px;
+    }
+    .doc-section h3 {
+      font-size: 16px;
+      font-weight: 600;
+      color: var(--fg-1);
+      margin: 28px 0 8px;
+    }
+    .doc-section p {
+      color: var(--fg-2);
+      margin-bottom: 14px;
+    }
+    .doc-section ul, .doc-section ol {
+      color: var(--fg-2);
+      padding-left: 22px;
+      margin-bottom: 14px;
+    }
+    .doc-section li {
+      margin-bottom: 8px;
+    }
+    .doc-section code {
+      background: rgba(212,255,58,0.08);
+      border: 1px solid rgba(212,255,58,0.15);
+      border-radius: 4px;
+      padding: 1px 6px;
+      font-size: 13px;
+      font-family: monospace;
+      color: var(--accent);
+    }
+
+    .divider {
+      height: 1px;
+      background: var(--line);
+      margin: 56px 0;
+    }
+
+    /* ── Footer ── */
+    .page-footer {
+      border-top: 1px solid var(--line);
+      padding: 32px var(--pad-x);
+      max-width: 720px;
+      margin: 0 auto;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 12px;
+      color: var(--fg-3);
+      font-size: 13px;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="nav-wrap">
+    <div class="nav">
+      <div class="nav-logo">VYRUL<span>HQ</span></div>
+      <a href="/" class="nav-back">← Back to site</a>
+    </div>
+  </div>
+
+  <div class="page">
+
+    <div class="page-header">
+      <h1>Privacy Policy</h1>
+      <p>Last updated: May 26, 2026</p>
+    </div>
+
+    <div class="doc-section" id="who-we-are">
+      <h2>1. Who we are</h2>
+      <p>
+        VyrulHQ is operated by Rise Advertising LLC ("VyrulHQ", "we", "us"). We provide a managed
+        short-form content service to our clients, including a private web portal at hub.vyrulhq.com
+        where clients view content we've produced and posted on their behalf.
+      </p>
+    </div>
+
+    <div class="doc-section" id="what-we-collect">
+      <h2>2. What information we collect</h2>
+      <ul>
+        <li><strong>Account info</strong> — your name, business name, email, and authentication identifiers when you sign in to the portal.</li>
+        <li><strong>Footage you upload</strong> — video files and notes you submit to us for content production.</li>
+        <li><strong>Connected social-platform data</strong> — when an authorized administrator connects a TikTok, YouTube, or Instagram account on your behalf via OAuth, we receive an access token from that platform and use it to read the connected account's published videos and aggregate engagement metrics (views, likes, comments, shares, follower counts).</li>
+        <li><strong>Messages</strong> — content of messages you exchange with your account manager through the portal.</li>
+        <li><strong>Billing data</strong> — payment method tokens and subscription state are processed by Stripe; we do not store full card numbers.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section" id="how-we-use">
+      <h2>3. How we use it</h2>
+      <ul>
+        <li>Display posted videos and their performance metrics on your client calendar and performance dashboard.</li>
+        <li>Send daily updates to refresh metrics for connected accounts.</li>
+        <li>Facilitate communication between you and your account manager.</li>
+        <li>Process billing for your subscription.</li>
+        <li>Comply with legal obligations and enforce our terms.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section" id="third-party">
+      <h2>4. Third-party platforms and OAuth</h2>
+      <p>
+        When you authorize VyrulHQ to access a TikTok, YouTube, or Instagram account, we receive
+        an OAuth token from that platform under read scopes (e.g. YouTube's
+        <code>youtube.readonly</code>, TikTok's <code>user.info.profile</code> and
+        <code>video.list</code>, Meta's <code>instagram_basic</code>). We use this access only to
+        read the connected account's public videos and aggregate engagement metrics for display in
+        our portal. We do not post, modify, delete, or share content on the connected account. You
+        can revoke this access at any time by disconnecting the integration from our portal or
+        directly in the connected platform's app settings.
+      </p>
+      <p>
+        Tokens are stored encrypted at rest in our database and used only by automated server-side
+        jobs running in our private infrastructure. They are not shared with any other party.
+      </p>
+    </div>
+
+    <div class="doc-section" id="data-sharing">
+      <h2>5. Data sharing</h2>
+      <p>We do not sell your data. We share data only with:</p>
+      <ul>
+        <li><strong>Service providers</strong> we use to run the portal — Supabase (database, authentication, file storage), Vercel (hosting), Stripe (billing), Resend (email), and the social platforms above. Each handles data under their own privacy terms.</li>
+        <li><strong>Law enforcement</strong> when required by a valid legal process.</li>
+      </ul>
+    </div>
+
+    <div class="doc-section" id="retention">
+      <h2>6. Data retention and deletion</h2>
+      <p>
+        We retain your account information, uploaded footage, and metrics for as long as your
+        subscription is active. After cancellation, we keep data for up to 90 days for billing
+        and dispute resolution, then delete it. You can request earlier deletion by emailing
+        <a href="mailto:hello@vyrulhq.com">hello@vyrulhq.com</a>.
+      </p>
+      <p>
+        OAuth tokens for connected social accounts are deleted immediately when you disconnect
+        the integration or close your account.
+      </p>
+    </div>
+
+    <div class="doc-section" id="your-rights">
+      <h2>7. Your rights</h2>
+      <p>
+        You can request access to, correction of, or deletion of your personal data by emailing
+        <a href="mailto:hello@vyrulhq.com">hello@vyrulhq.com</a>. If you're in the EU/UK, you
+        have additional rights under GDPR; if you're in California, you have rights under the CCPA.
+        We respond to verified requests within 30 days.
+      </p>
+    </div>
+
+    <div class="doc-section" id="security">
+      <h2>8. Security</h2>
+      <p>
+        All traffic to hub.vyrulhq.com is served over HTTPS. Database connections and OAuth tokens
+        are encrypted in transit and at rest. Access to production data is limited to VyrulHQ team
+        members under written confidentiality obligations.
+      </p>
+    </div>
+
+    <div class="doc-section" id="changes">
+      <h2>9. Changes</h2>
+      <p>
+        If we update this policy, we'll change the "Last updated" date above and email portal users
+        about material changes.
+      </p>
+    </div>
+
+    <div class="divider"></div>
+
+    <div class="doc-section" id="contact">
+      <h2>Contact</h2>
+      <p>Privacy questions or requests:</p>
+      <p><a href="mailto:hello@vyrulhq.com">hello@vyrulhq.com</a></p>
+      <p style="margin-top: 20px;"><a href="/terms.html">View Terms of Service →</a></p>
+    </div>
+
+  </div>
+
+  <div class="page-footer">
+    <span>© <script>document.write(new Date().getFullYear())</script> Vyrul HQ · All rights reserved</span>
+    <a href="/" style="color: var(--fg-3);">← Back to vyrulhq.com</a>
+  </div>
+
+</body>
+</html>
