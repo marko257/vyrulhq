@@ -16,7 +16,7 @@ def _retry_find_channel(youtube, name: str, retries: int = 3):
             return find_channel(youtube, podcast_name=name, podcast_website='')
         except Exception as exc:
             if '429' in str(exc) and attempt < retries - 1:
-                wait = 60 * (attempt + 1)
+                wait = 30 * (attempt + 1)
                 click.echo(f'\n  [rate limited, waiting {wait}s...]', nl=False)
                 time.sleep(wait)
             else:
@@ -77,7 +77,7 @@ def main(keywords: str, max_emails: int, output: str):
         except Exception as exc:
             click.echo(f' — error ({type(exc).__name__}: {exc}), skipping')
         finally:
-            time.sleep(2)  # YouTube search quota: ~30 req/min safe limit
+            time.sleep(3)  # YouTube search quota: ~20 req/min safe limit
 
     prospects.sort(key=lambda p: p['gap_score'], reverse=True)
     click.echo(f'\n{len(prospects)} qualified prospects found.')

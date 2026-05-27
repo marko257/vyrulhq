@@ -70,6 +70,7 @@ def _fetch_items(dataset_id: str) -> list[dict]:
 
 def _deduplicate(items: list[dict]) -> list[dict]:
     seen_emails = set()
+    seen_names = set()
     results = []
     for item in items:
         url = item.get('url', '')
@@ -80,7 +81,6 @@ def _deduplicate(items: list[dict]) -> list[dict]:
         email = (item.get('email') or '').strip().lower()
         if not email or email in seen_emails:
             continue
-        seen_emails.add(email)
 
         name = item.get('title', '').strip()
         # Strip Spotify-appended suffixes that break YouTube matching
@@ -89,6 +89,12 @@ def _deduplicate(items: list[dict]) -> list[dict]:
                 name = name[:-len(suffix)].strip()
                 break
 
+        name_key = name.lower()
+        if name_key in seen_names:
+            continue
+
+        seen_emails.add(email)
+        seen_names.add(name_key)
         results.append({
             'podcast_name': name,
             'email': email,
