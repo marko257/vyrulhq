@@ -11,6 +11,8 @@ GENRE_SLUGS = {
     'coaching': 111,
 }
 
+GENRE_ID_TO_SLUG = {v: k for k, v in GENRE_SLUGS.items()}
+
 
 def search_podcasts(categories: list[str], limit: int, api_key: str) -> list[dict]:
     genre_ids = [str(GENRE_SLUGS[c]) for c in categories if c in GENRE_SLUGS]
@@ -51,7 +53,10 @@ def search_podcasts(categories: list[str], limit: int, api_key: str) -> list[dic
                 'rss_url': item.get('rss', ''),
                 'website': item.get('website', ''),
                 'episode_count': item.get('total_episodes', 0),
-                'category': categories[0] if categories else '',
+                'category': next(
+                    (GENRE_ID_TO_SLUG[gid] for gid in item.get('genre_ids', []) if gid in GENRE_ID_TO_SLUG),
+                    categories[0] if categories else ''
+                ),
             })
             if len(results) >= limit:
                 break

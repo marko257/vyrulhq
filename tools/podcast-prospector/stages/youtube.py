@@ -16,8 +16,11 @@ def find_channel(youtube, podcast_name: str, podcast_website: str) -> Optional[d
         maxResults=3,
     ).execute()
 
+    best_name_match = None
+
     for item in search_result.get('items', []):
         channel_id = item['id']['channelId']
+        channel_title = item['snippet'].get('title', '')
 
         channel_result = youtube.channels().list(
             id=channel_id,
@@ -34,18 +37,34 @@ def find_channel(youtube, podcast_name: str, podcast_website: str) -> Optional[d
             .get('website', '')
         )
         channel_domain = extract_domain(channel_website)
+        uploads_playlist_id = (
+            channel['contentDetails']['relatedPlaylists']['uploads']
+        )
 
+        match_dict = {
+            'channel_id': channel_id,
+            'channel_url': f'https://www.youtube.com/channel/{channel_id}',
+            'uploads_playlist_id': uploads_playlist_id,
+        }
+
+        # Domain match is high confidence — return immediately
         if podcast_domain and channel_domain and podcast_domain == channel_domain:
-            uploads_playlist_id = (
-                channel['contentDetails']['relatedPlaylists']['uploads']
-            )
-            return {
-                'channel_id': channel_id,
-                'channel_url': f'https://www.youtube.com/channel/{channel_id}',
-                'uploads_playlist_id': uploads_playlist_id,
-            }
+            return match_dict
 
-    return None
+        # Track best name-similarity match as fallback
+        if best_name_match is None and _names_similar(podcast_name, channel_title):
+            best_name_match = match_dict
+
+    return best_name_match
+
+
+def _names_similar(podcast_name: str, channel_title: str) -> bool:
+    from difflib import SequenceMatcher
+    a = podcast_name.lower().strip()
+    b = channel_title.lower().strip()
+    if a in b or b in a:
+        return True
+    return SequenceMatcher(None, a, b).ratio() >= 0.8
 
 
 def get_shorts_gap(youtube, uploads_playlist_id: str) -> dict:

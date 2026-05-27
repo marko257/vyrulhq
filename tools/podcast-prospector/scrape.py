@@ -1,3 +1,5 @@
+import time
+
 import click
 from googleapiclient.discovery import build
 
@@ -65,8 +67,9 @@ def main(categories: str, limit: int, output: str):
             click.echo(f' — gap score {score:.1f} ✓')
 
         except Exception as exc:
-            click.echo(f' — error ({exc}), skipping')
-            continue
+            click.echo(f' — error ({type(exc).__name__}: {exc}), skipping')
+        finally:
+            time.sleep(0.5)
 
     prospects.sort(key=lambda p: p['gap_score'], reverse=True)
     click.echo(f'\n{len(prospects)} qualified prospects found.')
