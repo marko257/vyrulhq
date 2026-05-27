@@ -5,3 +5,6 @@ Sessions/
 knowledge/
 CLAUDE.md
 .DS_Store
+.vercel
+tools/podcast-prospector/.env
+tools/podcast-prospector/prospects.csv
