@@ -10,8 +10,8 @@ FIELDNAMES = [
     'yt_videos_90d',
     'yt_shorts_90d',
     'gap_score',
-    'category',
-    'episode_count',
+    'keyword',
+    'spotify_url',
 ]
 
 

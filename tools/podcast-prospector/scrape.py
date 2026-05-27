@@ -4,42 +4,37 @@ import click
 from googleapiclient.discovery import build
 
 from config import YOUTUBE_API_KEY
-from stages.discover import search_podcasts
-from stages.extract_email import extract_email
+from stages.spotify_scraper import scrape_spotify_leads
 from stages.youtube import find_channel, get_shorts_gap
 from utils import calculate_gap_score
 from writer import write_csv
 
 
 @click.command()
-@click.option('--categories', default='business,entrepreneurship', show_default=True,
-              help='Comma-separated category slugs: business, entrepreneurship, self-improvement, marketing, investing, health, coaching')
-@click.option('--limit', default=100, show_default=True,
-              help='Max podcasts to discover')
+@click.option('--keywords', default='entrepreneurship,coaching,marketing,investing,business,founder',
+              show_default=True, help='Comma-separated Spotify search keywords')
+@click.option('--max-emails', default=50, show_default=True,
+              help='Max emails to fetch per Apify run')
 @click.option('--output', default='prospects.csv', show_default=True,
               help='Output CSV path')
-def main(categories: str, limit: int, output: str):
-    category_list = [c.strip() for c in categories.split(',')]
+def main(keywords: str, max_emails: int, output: str):
+    keyword_list = [k.strip() for k in keywords.split(',')]
     youtube = build('youtube', 'v3', developerKey=YOUTUBE_API_KEY)
     prospects = []
 
-    click.echo(f'Discovering up to {limit} podcasts in: {", ".join(category_list)}')
-    podcasts = search_podcasts(categories=category_list, limit=limit)
-    click.echo(f'Found {len(podcasts)} podcasts. Processing...\n')
+    click.echo(f'Scraping Spotify for keywords: {", ".join(keyword_list)} (max {max_emails} emails)...')
+    leads = scrape_spotify_leads(keywords=keyword_list, max_emails=max_emails)
+    click.echo(f'Got {len(leads)} leads with emails. Checking YouTube gaps...\n')
 
-    for i, podcast in enumerate(podcasts, 1):
-        name = podcast['podcast_name']
-        click.echo(f'[{i}/{len(podcasts)}] {name}', nl=False)
+    for i, lead in enumerate(leads, 1):
+        name = lead['podcast_name']
+        email = lead['email']
+        click.echo(f'[{i}/{len(leads)}] {name}', nl=False)
 
         try:
-            channel = find_channel(youtube, podcast_name=name, podcast_website=podcast['website'])
+            channel = find_channel(youtube, podcast_name=name, podcast_website='')
             if not channel:
                 click.echo(' — no YouTube match, skipping')
-                continue
-
-            email = extract_email(podcast['rss_url']) or channel.get('business_email')
-            if not email:
-                click.echo(' — no email, skipping')
                 continue
 
             gap = get_shorts_gap(youtube, uploads_playlist_id=channel['uploads_playlist_id'])
@@ -51,7 +46,7 @@ def main(categories: str, limit: int, output: str):
             score = calculate_gap_score(
                 videos=gap['yt_videos_90d'],
                 shorts=gap['yt_shorts_90d'],
-                episodes=podcast['episode_count'],
+                episodes=50,  # episode count not available from Spotify scraper
             )
 
             prospects.append({
@@ -61,8 +56,8 @@ def main(categories: str, limit: int, output: str):
                 'yt_videos_90d': gap['yt_videos_90d'],
                 'yt_shorts_90d': gap['yt_shorts_90d'],
                 'gap_score': round(score, 2),
-                'category': podcast['category'],
-                'episode_count': podcast['episode_count'],
+                'keyword': lead['keyword'],
+                'spotify_url': lead['spotify_url'],
             })
             click.echo(f' — gap score {score:.1f} ✓')
 
