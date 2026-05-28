@@ -1243,8 +1243,10 @@ function Nav() {
             <a href="#packages">Packages</a>
             <a href="#faq">FAQ</a>
           </nav>
-          <a href="/portal" className="btn btn-ghost">Client Login</a>
-          <a href="https://calendly.com/marko-riseadvertising/vyrulhq-demo" target="_blank" rel="noopener noreferrer" className="btn btn-primary">Book a Call {Icon.arrow}</a>
+          <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
+            <a href="https://hub.vyrulhq.com/" className="btn btn-ghost">Client Login</a>
+            <a href="https://calendly.com/marko-riseadvertising/vyrulhq-demo" target="_blank" rel="noopener noreferrer" className="btn btn-primary">Book a Call {Icon.arrow}</a>
+          </div>
           <button
             className={`nav-menu-btn${menuOpen ? ' open' : ''}`}
             aria-label={menuOpen ? 'Close menu' : 'Open menu'}
@@ -1262,7 +1264,7 @@ function Nav() {
           <a href="#packages" onClick={closeMenu}>Packages</a>
           <a href="#faq" onClick={closeMenu}>FAQ</a>
         </nav>
-        <a href="/portal" className="btn btn-ghost btn-lg" onClick={closeMenu}>
+        <a href="https://hub.vyrulhq.com/" className="btn btn-ghost btn-lg" onClick={closeMenu}>
           Client Login
         </a>
         <a href="https://calendly.com/marko-riseadvertising/vyrulhq-demo" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg" onClick={closeMenu}>
@@ -1722,7 +1724,7 @@ function FooterCTA() {
         <p>Let's build the system once and run it for you from here.</p>
         <div style={{ display: 'flex', gap: 14, justifyContent: 'center', flexWrap: 'wrap' }}>
           <a href="https://calendly.com/marko-riseadvertising/vyrulhq-demo" target="_blank" rel="noopener noreferrer" className="btn btn-primary btn-lg">Book a Free Call {Icon.arrow}</a>
-          <a href="/portal" className="btn btn-ghost btn-lg">Client Login</a>
+          <a href="https://hub.vyrulhq.com/" className="btn btn-ghost btn-lg">Client Login</a>
         </div>
         <div className="foot-cta-meta">
           <span>~30 MIN</span><span>·</span><span>FREE STRATEGY AUDIT</span><span>·</span><span>NO COMMITMENT</span>
