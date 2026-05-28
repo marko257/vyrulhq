@@ -1455,19 +1455,12 @@ function HowItWorks() {
 
 // ── Results ───────────────────────────────────────────────────────────────────
 function Results() {
-  const [activeVideo, setActiveVideo] = React.useState(null);
   const [thumbnails, setThumbnails] = React.useState({});
 
   const tiktokVideos = [
-    { id: '7634205758632086797', caption: 'When does an age gap become concerning?', c1: '#2a1f3d', c2: '#0d0d12', gx: '30%', gy: '20%' },
-    { id: '7632843500995824910', caption: 'Engagement ring trend predictions', c1: '#1f3528', c2: '#0d0d12', gx: '70%', gy: '40%' },
+    { id: '7634205758632086797', caption: 'When does an age gap become concerning?', views: null, c1: '#2a1f3d', c2: '#0d0d12', gx: '30%', gy: '20%' },
+    { id: '7632843500995824910', caption: 'Engagement ring trend predictions', views: null, c1: '#1f3528', c2: '#0d0d12', gx: '70%', gy: '40%' },
   ];
-
-  React.useEffect(() => {
-    const onKey = e => { if (e.key === 'Escape') setActiveVideo(null); };
-    document.addEventListener('keydown', onKey);
-    return () => document.removeEventListener('keydown', onKey);
-  }, []);
 
   React.useEffect(() => {
     tiktokVideos.forEach(v => {
@@ -1527,11 +1520,13 @@ function Results() {
         <div className="results-scroll-wrap">
           <div className="results-scroll">
             {tiktokVideos.map((v) => (
-              <div
+              <a
                 className="clip-card"
                 key={v.id}
-                style={{ '--c1': v.c1, '--c2': v.c2, '--gx': v.gx, '--gy': v.gy }}
-                onClick={() => setActiveVideo(v.id)}
+                href={`https://www.tiktok.com/@twosidesofthestory_/video/${v.id}`}
+                target="_blank"
+                rel="noopener noreferrer"
+                style={{ '--c1': v.c1, '--c2': v.c2, '--gx': v.gx, '--gy': v.gy, textDecoration: 'none' }}
               >
                 <div className="clip-thumb">
                   {thumbnails[v.id] && (
@@ -1541,35 +1536,19 @@ function Results() {
                       style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
                     />
                   )}
-                  {thumbnails[v.id] && (
-                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.55))' }} />
-                  )}
+                  <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 45%, rgba(0,0,0,0.7))' }} />
                   <div className="clip-play" style={{ position: 'relative' }}>{Icon.play}</div>
                 </div>
-                <span className="clip-pill featured">LIVE</span>
                 <div className="clip-foot">
+                  {v.views && <div className="clip-views">{v.views}</div>}
                   <div className="clip-caption">{v.caption}</div>
                   <div className="clip-client" style={{ marginTop: 4 }}>@twosidesofthestory_</div>
                 </div>
-              </div>
+              </a>
             ))}
           </div>
         </div>
 
-        {activeVideo && (
-          <div className="clip-modal-backdrop" onClick={() => setActiveVideo(null)}>
-            <div className="clip-modal" onClick={e => e.stopPropagation()}>
-              <button className="clip-modal-close" onClick={() => setActiveVideo(null)}>×</button>
-              <iframe
-                src={`https://www.tiktok.com/embed/v2/${activeVideo}`}
-                allowFullScreen
-                scrolling="no"
-                allow="encrypted-media; picture-in-picture"
-                title="TikTok video"
-              ></iframe>
-            </div>
-          </div>
-        )}
 
         <div className="reviews-grid">
           {reviews.map((r, i) => (
