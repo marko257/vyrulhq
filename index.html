@@ -681,6 +681,43 @@ section { position: relative; }
 .p-strategy-item { font-size: 11.5px; color: #444; display: flex; gap: 6px; }
 .p-strategy-item::before { content: '•'; color: #16a34a; flex-shrink: 0; }
 
+/* this month two-col */
+.p-this-month-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; margin-top: 14px; }
+.p-card { border: 1px solid #e8e8ed; border-radius: 8px; padding: 14px 16px; }
+.p-card-label { font-size: 9px; text-transform: uppercase; letter-spacing: .1em; color: #999; margin-bottom: 10px; }
+.p-top-clip-inner { display: flex; gap: 10px; }
+.p-top-clip-thumb {
+  width: 56px; height: 72px; border-radius: 5px; flex-shrink: 0;
+  background: linear-gradient(160deg,#c9a0a0,#9a7ab0);
+  position: relative; overflow: hidden;
+}
+.p-top-clip-thumb::after {
+  content: '▶'; position: absolute; inset: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 10px; color: rgba(255,255,255,0.8);
+}
+.p-top-clip-views { font-size: 20px; font-weight: 800; color: #111; line-height: 1; margin-bottom: 4px; letter-spacing: -0.02em; }
+.p-top-clip-views-label { font-size: 8px; text-transform: uppercase; letter-spacing: .1em; color: #999; margin-bottom: 6px; }
+.p-top-clip-desc { font-size: 10px; color: #444; line-height: 1.4; margin-bottom: 5px; display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.p-top-clip-meta { font-size: 9px; color: #999; margin-bottom: 5px; }
+.p-top-clip-watch { font-size: 10px; font-weight: 600; color: #16a34a; display: inline-flex; align-items: center; gap: 3px; }
+/* platform performance */
+.p-perf-label { font-size: 9px; text-transform: uppercase; letter-spacing: .1em; color: #999; margin-bottom: 2px; text-align: right; }
+.p-perf-total { font-size: 9px; color: #999; text-align: right; margin-bottom: 10px; }
+.p-platform-row { margin-bottom: 10px; }
+.p-platform-row:last-child { margin-bottom: 0; }
+.p-platform-head { display: flex; align-items: center; justify-content: space-between; margin-bottom: 5px; }
+.p-platform-name { display: flex; align-items: center; gap: 6px; font-size: 12px; font-weight: 500; color: #111; }
+.p-platform-icon { width: 18px; height: 18px; border-radius: 4px; display: flex; align-items: center; justify-content: center; font-size: 9px; font-weight: 700; }
+.p-platform-icon.yt { background: #ff0000; color: #fff; }
+.p-platform-icon.tt { background: #000; color: #fff; font-size: 8px; }
+.p-platform-icon.ig { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color: #fff; }
+.p-platform-stat { font-size: 13px; font-weight: 700; color: #111; }
+.p-platform-pct { font-size: 9px; color: #999; text-align: right; }
+.p-bar-track { height: 4px; background: #f0f0f0; border-radius: 2px; overflow: hidden; }
+.p-bar-fill { height: 100%; border-radius: 2px; }
+.p-platform-na { font-size: 11px; color: #bbb; font-style: italic; }
+
 @media (max-width: 800px) {
   .portal-browser { display: none; }
   .p-stat-row { grid-template-columns: repeat(2,1fr); }
@@ -1570,44 +1607,44 @@ function HowItWorks() {
 function PortalPreview() {
   const [tab, setTab] = React.useState('dashboard');
 
-  const LockIcon = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>;
+  const LockIcon = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" style={{width:10,height:10,flexShrink:0}}><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>;
 
-  const NavItems = ({ active }) => (
+  const Sidebar = ({ active }) => (
     <div className="p-sidebar">
       <div className="p-sidebar-logo">VYRUL<span>HQ</span></div>
       {[
-        { id:'dashboard', icon:'◻', label:'Dashboard' },
-        { id:'calendar', icon:'▦', label:'Calendar' },
-        { id:'clips', icon:'▶', label:'Clips' },
-        { id:'submit', icon:'↑', label:'Submit footage' },
-        { id:'messages', icon:'◯', label:'Messages' },
-        { id:'strategy', icon:'↗', label:'Strategy' },
+        { id:'dashboard', label:'Dashboard',      svg:<svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="1" width="6" height="6" rx="1"/><rect x="9" y="1" width="6" height="6" rx="1"/><rect x="1" y="9" width="6" height="6" rx="1"/><rect x="9" y="9" width="6" height="6" rx="1"/></svg> },
+        { id:'calendar',  label:'Calendar',       svg:<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><rect x="1" y="2" width="14" height="13" rx="2"/><path d="M1 6h14M5 1v2M11 1v2"/></svg> },
+        { id:'clips',     label:'Clips',          svg:<svg viewBox="0 0 16 16" fill="currentColor"><rect x="1" y="2" width="14" height="12" rx="2" opacity=".2"/><path d="M6 5.5l5 2.5-5 2.5V5.5z"/></svg> },
+        { id:'submit',    label:'Submit footage', svg:<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M8 11V3M4 6l4-4 4 4M2 14h12"/></svg> },
+        { id:'messages',  label:'Messages',       svg:<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 2h12a1 1 0 0 1 1 1v8a1 1 0 0 1-1 1H5l-4 2V3a1 1 0 0 1 1-1z"/></svg> },
+        { id:'strategy',  label:'Strategy',       svg:<svg viewBox="0 0 16 16" fill="none" stroke="currentColor" strokeWidth="1.5"><path d="M2 12L6 7l3 3 5-6"/></svg> },
       ].map(n => (
         <div key={n.id} className={`p-nav-item${active===n.id?' active':''}`}>
-          <span className="p-nav-icon">{n.icon}</span>{n.label}
+          <span className="p-nav-icon">{n.svg}</span>{n.label}
         </div>
       ))}
     </div>
   );
 
   const DashboardScreen = () => (
-    <div className="p-main">
+    <div className="p-main" style={{ overflowY:'auto', height:'100%' }}>
       <div className="p-eyebrow">VYRULHQ · SCALE PLAN</div>
       <div className="p-title">Hey <span className="hi">Marko.</span></div>
-      <div className="p-subtitle">You've got <b>503.1K views</b> across <b>60 clips</b> in the last 30 days. Strongest on <b>TikTok</b>.</div>
+      <div className="p-subtitle">You've got <b>1.2M views</b> across <b>90 clips</b> in the last 30 days. Strongest on <b>TikTok</b>.</div>
       <div className="p-stat-row">
-        <div className="p-stat"><div className="p-stat-label">Total Views</div><div className="p-stat-val">503.1K</div><div className="p-stat-sub">Last 30 days</div></div>
-        <div className="p-stat"><div className="p-stat-label">Clips Published</div><div className="p-stat-val">60</div><div className="p-stat-sub">Last 30 days</div></div>
-        <div className="p-stat"><div className="p-stat-label">🎵 Top Platform</div><div className="p-stat-val">TikTok</div><div className="p-stat-sub">By view share</div></div>
-        <div className="p-stat"><div className="p-stat-label">Posting Days</div><div className="p-stat-val">27</div><div className="p-stat-sub">of last 30</div></div>
+        <div className="p-stat"><div className="p-stat-label">Total Views</div><div className="p-stat-val">1.2M</div><div className="p-stat-sub">Last 30 days</div></div>
+        <div className="p-stat"><div className="p-stat-label">Clips Published</div><div className="p-stat-val">90</div><div className="p-stat-sub">Last 30 days</div></div>
+        <div className="p-stat"><div className="p-stat-label" style={{display:'flex',alignItems:'center',gap:3}}><svg width="9" height="9" viewBox="0 0 24 24" fill="currentColor"><path d="M19.59 6.69a4.83 4.83 0 0 1-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 0 1-2.88 2.5 2.89 2.89 0 0 1-2.89-2.89 2.89 2.89 0 0 1 2.89-2.89c.28 0 .54.04.79.1V9.01a6.27 6.27 0 0 0-.79-.05 6.34 6.34 0 0 0-6.34 6.34 6.34 6.34 0 0 0 6.34 6.34 6.34 6.34 0 0 0 6.33-6.34V8.69a8.16 8.16 0 0 0 4.77 1.52V6.76a4.85 4.85 0 0 1-1-.07z"/></svg>Top Platform</div><div className="p-stat-val">TikTok</div><div className="p-stat-sub">By view share</div></div>
+        <div className="p-stat"><div className="p-stat-label">Posting Days</div><div className="p-stat-val">30</div><div className="p-stat-sub">of last 30</div></div>
       </div>
       <div className="p-section-label">JUMP TO</div>
       <div className="p-jump-grid">
         {[
-          { id:'cal', icon:'📅', name:'Calendar', desc:'What we\'ve posted and what\'s coming', active:true },
-          { id:'clips', icon:'🎞', name:'Clips', desc:'Your full clip library' },
+          { id:'cal',    icon:'📅', name:'Calendar',       desc:"What we've posted and what's coming", active:true },
+          { id:'clips',  icon:'🎞', name:'Clips',          desc:'Your full clip library' },
           { id:'submit', icon:'📤', name:'Submit footage', desc:'Send us raw video' },
-          { id:'msg', icon:'💬', name:'Messages', desc:'Talk to your account manager' },
+          { id:'msg',    icon:'💬', name:'Messages',       desc:'Talk to your account manager' },
         ].map(c => (
           <div key={c.id} className={`p-jump-card${c.active?' active':''}`}>
             <div className="p-jump-icon">{c.icon}</div>
@@ -1616,25 +1653,67 @@ function PortalPreview() {
           </div>
         ))}
       </div>
+      <div className="p-section-label" style={{ marginTop:14 }}>THIS MONTH</div>
+      <div className="p-this-month-grid">
+        <div className="p-card">
+          <div className="p-card-label">TOP CLIP</div>
+          <div className="p-top-clip-inner">
+            <div className="p-top-clip-thumb" />
+            <div>
+              <div className="p-top-clip-views">1,240,106</div>
+              <div className="p-top-clip-views-label">VIEWS</div>
+              <div className="p-top-clip-desc">At what point does an age gap become problematic? #agegap #relationships #dating</div>
+              <div className="p-top-clip-meta">Posted Apr 29</div>
+              <div className="p-top-clip-watch">Watch ↗</div>
+            </div>
+          </div>
+        </div>
+        <div className="p-card">
+          <div style={{ display:'flex', justifyContent:'space-between', alignItems:'baseline', marginBottom:10 }}>
+            <div className="p-card-label" style={{margin:0}}>PLATFORM PERFORMANCE</div>
+            <div style={{ fontSize:9, color:'#999' }}>1.2M total views</div>
+          </div>
+          {[
+            { name:'YouTube',   icon:'yt',  iconText:'▶', views:'109K',  pct:9,  bar:'#ff0000', na:false },
+            { name:'TikTok',    icon:'tt',  iconText:'♪', views:'1.09M', pct:91, bar:'#000',    na:false },
+            { name:'Instagram', icon:'ig',  iconText:'◉', views:null,    pct:0,  bar:'',        na:true  },
+          ].map(p => (
+            <div key={p.name} className="p-platform-row">
+              <div className="p-platform-head">
+                <div className="p-platform-name">
+                  <div className={`p-platform-icon ${p.icon}`}>{p.iconText}</div>
+                  {p.name}
+                </div>
+                {p.na ? <div className="p-platform-na">Not connected yet</div> : <div className="p-platform-stat">{p.views}</div>}
+              </div>
+              {!p.na && <>
+                <div className="p-bar-track"><div className="p-bar-fill" style={{ width:`${p.pct}%`, background:p.bar }} /></div>
+                <div className="p-platform-pct">{p.pct}%</div>
+              </>}
+              {p.na && <div className="p-bar-track"><div className="p-bar-fill" style={{ width:'0%' }} /></div>}
+            </div>
+          ))}
+        </div>
+      </div>
     </div>
   );
 
   const CalendarScreen = () => {
     const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
     const cells = [
-      { d:26, clips:[{t:'Does your partner...',v:'752'},  {t:'Are dating apps ma...',v:'464'}] },
-      { d:27, clips:[{t:'Does your partner...',v:'1,225'},{t:'How do you get yo...',v:'527'},{t:'What do you think...',v:'1,421'}] },
-      { d:28, clips:[{t:'What would you do...',v:'1,441'},{t:'My engagement rin...',v:'1,445'},{t:'Do you want kids o...',v:'838'}] },
-      { d:29, clips:[{t:'My sister in law ask...',v:'22,276'},{t:'At what point does...',v:'428,106'},{t:'Would you move se...',v:'467'}] },
-      { d:30, clips:[{t:'Would you move se...',v:'1,318'},{t:'TSOTS Ep 1',v:'0'}] },
-      { d:1,  clips:[{t:'The two biggest lie...',v:'12,796'},{t:'Who should pay for...',v:'453'},{t:'Would you cover a...',v:'1,615'}] },
-      { d:2,  clips:[{t:'Who should pay for...',v:'1,311'},{t:'The two biggest lie...',v:'1,905'},{t:'My 3 rules for dati...',v:'401'}] },
+      { d:26, clips:[{t:'Does your partner...',v:'8,412'},{t:'Are dating apps ma...',v:'6,204'}] },
+      { d:27, clips:[{t:'Does your partner...',v:'14,225'},{t:'How do you get yo...',v:'9,527'},{t:'What do you think...',v:'11,421'}] },
+      { d:28, clips:[{t:'What would you do...',v:'21,441'},{t:'My engagement rin...',v:'18,445'},{t:'Do you want kids o...',v:'7,838'}] },
+      { d:29, clips:[{t:'My sister in law ask...',v:'182,276'},{t:'At what point does...',v:'1,240,106'},{t:'Would you move se...',v:'12,467'}] },
+      { d:30, clips:[{t:'Would you move se...',v:'19,318'},{t:'TSOTS Ep 1',v:'4,102'}] },
+      { d:1,  clips:[{t:'The two biggest lie...',v:'94,796'},{t:'Who should pay for...',v:'8,453'},{t:'Would you cover a...',v:'14,615'}] },
+      { d:2,  clips:[{t:'Who should pay for...',v:'11,311'},{t:'The two biggest lie...',v:'22,905'},{t:'My 3 rules for dati...',v:'7,401'}] },
     ];
     return (
-      <div className="p-main" style={{ padding: '20px 24px' }}>
+      <div className="p-main" style={{ padding:'18px 22px' }}>
         <div className="p-eyebrow">VYRULHQ · SCHEDULE</div>
-        <div className="p-title" style={{ fontSize: 22, marginBottom: 2 }}>Calendar.</div>
-        <div className="p-subtitle" style={{ marginBottom: 12 }}>What we've posted, what's coming next, and what we need from you.</div>
+        <div className="p-title" style={{ fontSize:22, marginBottom:2 }}>Calendar.</div>
+        <div className="p-subtitle" style={{ marginBottom:10, fontSize:11 }}>What we've posted, what's coming next, and what we need from you to keep the engine running.</div>
         <div className="p-cal-nav">
           <button className="p-cal-nav-btn">‹</button>
           <span className="p-cal-month">May 2026</span>
@@ -1653,14 +1732,14 @@ function PortalPreview() {
               <div className="p-cal-day">{c.d}</div>
               {c.clips.slice(0,2).map((cl,j) => (
                 <div key={j} className="p-clip-chip">
-                  <div className="p-clip-thumb" style={{ background: `hsl(${(i*40+j*70)%360},30%,75%)` }} />
+                  <div className="p-clip-thumb" style={{ background:`hsl(${(i*53+j*97)%360},28%,70%)` }} />
                   <div>
                     <div className="p-clip-title">{cl.t}</div>
                     <div className="p-clip-views">{cl.v} views</div>
                   </div>
                 </div>
               ))}
-              {c.clips.length > 2 && <div style={{ fontSize:9, color:'#999', paddingLeft:4 }}>+{c.clips.length-2} more</div>}
+              {c.clips.length > 2 && <div style={{ fontSize:8, color:'#aaa', paddingLeft:3 }}>+{c.clips.length-2} more</div>}
             </div>
           ))}
         </div>
@@ -1669,26 +1748,30 @@ function PortalPreview() {
   };
 
   const StrategyScreen = () => (
-    <div className="p-main" style={{ overflowY: 'auto', height: '100%' }}>
+    <div className="p-main" style={{ overflowY:'auto', height:'100%' }}>
       <div className="p-eyebrow">VYRULHQ · DIRECTION</div>
-      <div className="p-title" style={{ fontSize: 22, marginBottom: 2 }}>Strategy.</div>
-      <div className="p-subtitle" style={{ marginBottom: 16 }}>Your current content direction — formats we're leaning into, hooks we're testing, themes ahead.<br/><span style={{ color:'#999', fontSize:11 }}>Last updated May 28, 2026</span></div>
+      <div className="p-title" style={{ fontSize:22, marginBottom:2 }}>Strategy.</div>
+      <div className="p-subtitle" style={{ marginBottom:14, fontSize:11 }}>
+        Your current content direction — formats we're leaning into, hooks we're testing, themes ahead.
+        <span style={{ display:'block', color:'#999', fontSize:10, marginTop:3 }}>Last updated May 28, 2026</span>
+      </div>
       {[
         { icon:'🎯', title:'Active formats', items:[
-          '90-second \'relationship hot take\' clip where you challenge a popular dating belief from a guest, ending with their unexpected counter-argument',
-          '60-second \'worst advice I ever got\' story extraction where guest shares a specific dating disaster that came from following bad advice',
-          '45-second \'green flag/red flag breakdown\' where you or a guest rapidly lists specific behaviors with quick explanations',
+          "90-second 'relationship hot take' clip — you challenge a popular dating belief from a guest, ending with their unexpected counter-argument",
+          "60-second 'worst advice I ever got' story extraction — guest shares a specific dating disaster from following bad advice",
+          "45-second 'green flag/red flag breakdown' — rapid-fire list of specific behaviors with quick explanations",
         ]},
         { icon:'⚡', title:'Hook angles', items:[
-          '\'The reason your relationships keep failing has nothing to do with them\' — targets self-reflection seekers',
-          '\'She told me the one thing men do that instantly kills attraction\' — curiosity gap plus gender dynamics tension',
-          '\'I stayed 10 years too long because of this lie\' — regret-based storytelling that promises hard-won wisdom',
-          '\'Stop asking if they like you. Ask this instead\' — reframe hook that promises a tactical upgrade',
+          "'The reason your relationships keep failing has nothing to do with them' — targets self-reflection seekers who suspect they're the common denominator",
+          "'She told me the one thing men do that instantly kills attraction' — curiosity gap plus gender dynamics tension",
+          "'I stayed 10 years too long because of this lie' — regret-based storytelling that promises hard-won wisdom",
+          "'Stop asking if they like you. Ask this instead' — reframe hook that promises a tactical upgrade",
+          "'The dating advice that ruined my 20s' — generational regret that hits millennials and older Gen Z hard",
         ]},
         { icon:'📈', title:'Upcoming themes', items:[
-          '\'Modern Dating Dysfunction\' — clips exposing how apps, texting culture, and situationships have broken traditional relationship progression',
-          '\'What Women Actually Want vs. What They Say\' — controversial but high-engagement content around communication gaps',
-          '\'Marriage Truths Nobody Talks About\' — raw, de-romanticized takes on long-term commitment',
+          "'Modern Dating Dysfunction' — clips exposing how apps, texting culture, and situationships have broken traditional relationship progression",
+          "'What Women Actually Want vs. What They Say' — controversial but high-engagement content around communication gaps between genders",
+          "'Marriage Truths Nobody Talks About' — raw, de-romanticized takes on long-term commitment from guests who've been through it",
         ]},
       ].map((s,i) => (
         <div key={i} className="p-strategy-card">
@@ -1709,38 +1792,28 @@ function PortalPreview() {
       <div className="section-inner">
         <div className="portal-lead">
           <div>
-            <div className="eyebrow" style={{ marginBottom: 22 }}>The Portal</div>
+            <div className="eyebrow" style={{ marginBottom:22 }}>The Portal</div>
             <h2>Your client portal.<br />No other agency has this.</h2>
           </div>
-          <p>Every client gets a private dashboard — live view counts, your full clip library, the content calendar, direct messaging with your account manager, and the strategy behind your account. All in one place.</p>
+          <p>Every client gets a private dashboard — live view counts, full clip library, content calendar, direct messaging with your account manager, and the strategy behind your account. All in one place.</p>
         </div>
         <div className="portal-tabs">
-          {[
-            { id:'dashboard', label:'Dashboard' },
-            { id:'calendar', label:'Calendar' },
-            { id:'strategy', label:'Strategy' },
-          ].map(t => (
-            <button key={t.id} className={`portal-tab${tab===t.id?' active':''}`} onClick={() => setTab(t.id)}>
-              {t.label}
-            </button>
+          {[{id:'dashboard',label:'Dashboard'},{id:'calendar',label:'Calendar'},{id:'strategy',label:'Strategy'}].map(t => (
+            <button key={t.id} className={`portal-tab${tab===t.id?' active':''}`} onClick={() => setTab(t.id)}>{t.label}</button>
           ))}
         </div>
         <div className="portal-browser">
           <div className="portal-chrome">
             <div className="portal-dots">
-              <div className="portal-dot red" />
-              <div className="portal-dot yellow" />
-              <div className="portal-dot green" />
+              <div className="portal-dot red"/><div className="portal-dot yellow"/><div className="portal-dot green"/>
             </div>
-            <div className="portal-urlbar">
-              <LockIcon /><span>hub.vyrulhq.com</span>
-            </div>
+            <div className="portal-urlbar"><LockIcon /><span>hub.vyrulhq.com</span></div>
           </div>
           <div className="portal-body">
-            <NavItems active={tab === 'calendar' ? 'calendar' : tab === 'strategy' ? 'strategy' : 'dashboard'} />
-            {tab === 'dashboard' && <DashboardScreen />}
-            {tab === 'calendar' && <CalendarScreen />}
-            {tab === 'strategy' && <StrategyScreen />}
+            <Sidebar active={tab==='calendar'?'calendar':tab==='strategy'?'strategy':'dashboard'} />
+            {tab==='dashboard' && <DashboardScreen />}
+            {tab==='calendar'  && <CalendarScreen />}
+            {tab==='strategy'  && <StrategyScreen />}
           </div>
         </div>
       </div>
