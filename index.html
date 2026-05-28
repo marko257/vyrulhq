@@ -674,23 +674,42 @@ section { position: relative; }
 }
 .clip-pill.featured { background: var(--accent); color: var(--accent-ink); }
 
-/* ---- TikTok embed cards ---- */
-.tiktok-card {
-  flex-shrink: 0;
-  width: 325px;
-  height: 580px;
-  scroll-snap-align: start;
+/* ---- Video modal ---- */
+.clip-modal-backdrop {
+  position: fixed; inset: 0;
+  background: rgba(0,0,0,0.88);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  z-index: 500;
+  display: flex; align-items: center; justify-content: center;
+}
+.clip-modal {
+  width: 340px; height: 610px;
   border-radius: var(--radius);
   overflow: hidden;
-  border: 1px solid var(--line-2);
-  background: #000;
   position: relative;
+  background: #000;
+  box-shadow: 0 40px 80px rgba(0,0,0,0.6);
 }
-.tiktok-card iframe {
-  width: 100%;
-  height: 100%;
-  border: none;
-  display: block;
+.clip-modal iframe { width: 100%; height: 100%; border: none; display: block; }
+.clip-modal-close {
+  position: absolute; top: -44px; right: 0;
+  background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+  color: #fff; font-size: 20px; cursor: pointer; line-height: 1;
+  font-family: inherit; border-radius: 50%;
+  width: 36px; height: 36px;
+  display: flex; align-items: center; justify-content: center;
+  transition: background 150ms;
+}
+.clip-modal-close:hover { background: rgba(255,255,255,0.2); }
+.clip-caption {
+  font-size: 12px; font-weight: 500;
+  line-height: 1.35;
+  color: var(--fg-1);
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 /* ---- Testimonials ---- */
@@ -1436,10 +1455,18 @@ function HowItWorks() {
 
 // ── Results ───────────────────────────────────────────────────────────────────
 function Results() {
+  const [activeVideo, setActiveVideo] = React.useState(null);
+
   const tiktokVideos = [
-    { id: '7634205758632086797', label: 'Two Sides of the Story' },
-    { id: '7632843500995824910', label: 'Two Sides of the Story' },
+    { id: '7634205758632086797', caption: 'When does an age gap become concerning?', c1: '#2a1f3d', c2: '#0d0d12', gx: '30%', gy: '20%' },
+    { id: '7632843500995824910', caption: 'Engagement ring trend predictions', c1: '#1f3528', c2: '#0d0d12', gx: '70%', gy: '40%' },
   ];
+
+  React.useEffect(() => {
+    const onKey = e => { if (e.key === 'Escape') setActiveVideo(null); };
+    document.addEventListener('keydown', onKey);
+    return () => document.removeEventListener('keydown', onKey);
+  }, []);
 
   const reviews = [
     {
@@ -1486,18 +1513,37 @@ function Results() {
         <div className="results-scroll-wrap">
           <div className="results-scroll">
             {tiktokVideos.map((v) => (
-              <div className="tiktok-card" key={v.id}>
-                <iframe
-                  src={`https://www.tiktok.com/embed/v2/${v.id}`}
-                  allowFullScreen
-                  scrolling="no"
-                  allow="encrypted-media; picture-in-picture"
-                  title={v.label}
-                />
+              <div
+                className="clip-card"
+                key={v.id}
+                style={{ '--c1': v.c1, '--c2': v.c2, '--gx': v.gx, '--gy': v.gy }}
+                onClick={() => setActiveVideo(v.id)}
+              >
+                <div className="clip-thumb"><div className="clip-play">{Icon.play}</div></div>
+                <span className="clip-pill featured">LIVE</span>
+                <div className="clip-foot">
+                  <div className="clip-caption">{v.caption}</div>
+                  <div className="clip-client" style={{ marginTop: 4 }}>@twosidesofthestory_</div>
+                </div>
               </div>
             ))}
           </div>
         </div>
+
+        {activeVideo && (
+          <div className="clip-modal-backdrop" onClick={() => setActiveVideo(null)}>
+            <div className="clip-modal" onClick={e => e.stopPropagation()}>
+              <button className="clip-modal-close" onClick={() => setActiveVideo(null)}>×</button>
+              <iframe
+                src={`https://www.tiktok.com/embed/v2/${activeVideo}`}
+                allowFullScreen
+                scrolling="no"
+                allow="encrypted-media; picture-in-picture"
+                title="TikTok video"
+              ></iframe>
+            </div>
+          </div>
+        )}
 
         <div className="reviews-grid">
           {reviews.map((r, i) => (
