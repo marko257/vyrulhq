@@ -1456,6 +1456,7 @@ function HowItWorks() {
 // ── Results ───────────────────────────────────────────────────────────────────
 function Results() {
   const [activeVideo, setActiveVideo] = React.useState(null);
+  const [thumbnails, setThumbnails] = React.useState({});
 
   const tiktokVideos = [
     { id: '7634205758632086797', caption: 'When does an age gap become concerning?', c1: '#2a1f3d', c2: '#0d0d12', gx: '30%', gy: '20%' },
@@ -1466,6 +1467,19 @@ function Results() {
     const onKey = e => { if (e.key === 'Escape') setActiveVideo(null); };
     document.addEventListener('keydown', onKey);
     return () => document.removeEventListener('keydown', onKey);
+  }, []);
+
+  React.useEffect(() => {
+    tiktokVideos.forEach(v => {
+      fetch(`https://www.tiktok.com/oembed?url=https://www.tiktok.com/@twosidesofthestory_/video/${v.id}`)
+        .then(r => r.json())
+        .then(data => {
+          if (data.thumbnail_url) {
+            setThumbnails(prev => ({ ...prev, [v.id]: data.thumbnail_url }));
+          }
+        })
+        .catch(() => {});
+    });
   }, []);
 
   const reviews = [
@@ -1519,7 +1533,19 @@ function Results() {
                 style={{ '--c1': v.c1, '--c2': v.c2, '--gx': v.gx, '--gy': v.gy }}
                 onClick={() => setActiveVideo(v.id)}
               >
-                <div className="clip-thumb"><div className="clip-play">{Icon.play}</div></div>
+                <div className="clip-thumb">
+                  {thumbnails[v.id] && (
+                    <img
+                      src={thumbnails[v.id]}
+                      alt={v.caption}
+                      style={{ position: 'absolute', inset: 0, width: '100%', height: '100%', objectFit: 'cover' }}
+                    />
+                  )}
+                  {thumbnails[v.id] && (
+                    <div style={{ position: 'absolute', inset: 0, background: 'linear-gradient(180deg, transparent 40%, rgba(0,0,0,0.55))' }} />
+                  )}
+                  <div className="clip-play" style={{ position: 'relative' }}>{Icon.play}</div>
+                </div>
                 <span className="clip-pill featured">LIVE</span>
                 <div className="clip-foot">
                   <div className="clip-caption">{v.caption}</div>
