@@ -1388,7 +1388,6 @@ function Nav() {
           <nav className="nav-links" aria-label="Primary">
             <a href="#how">How It Works</a>
             <a href="#results">Results</a>
-            <a href="#packages">Packages</a>
             <a href="#faq">FAQ</a>
           </nav>
           <div style={{ display: 'flex', gap: 8, alignItems: 'center' }}>
@@ -1409,7 +1408,6 @@ function Nav() {
         <nav>
           <a href="#how" onClick={closeMenu}>How It Works</a>
           <a href="#results" onClick={closeMenu}>Results</a>
-          <a href="#packages" onClick={closeMenu}>Packages</a>
           <a href="#faq" onClick={closeMenu}>FAQ</a>
         </nav>
         <a href="https://hub.vyrulhq.com/" className="btn btn-ghost btn-lg" onClick={closeMenu}>
@@ -2055,7 +2053,7 @@ function FAQ() {
     { q: "Can I cancel?", a: "Month-to-month. No long-term contracts. We keep clients because the system works, not because we lock them in." },
   ];
   return (
-    <section className="section-pad" id="faq">
+    <section className="section-pad" id="faq" style={{ background: 'var(--bg-2)' }}>
       <div className="container">
         <div className="section-head" style={{ textAlign: 'center', margin: '0 auto 56px' }}>
           <div className="eyebrow" style={{ justifyContent: 'center' }}>Common questions</div>
@@ -2160,7 +2158,6 @@ function App() {
       <HowItWorks />
       <PortalPreview />
       <Results />
-      <Packages />
       <FAQ />
       <FooterCTA />
       <Footer />
