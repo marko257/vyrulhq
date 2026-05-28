@@ -1453,6 +1453,7 @@ function Results() {
       quote: "Before VyrulHQ, I was posting maybe once a week. Now clips are going out daily and I'm barely touching any of it. The growth has been real too — we've had people discover Two Sides of the Story directly from the clips and start reaching out because of the content. Super easy team to work with and they actually understand what performs.",
       name: 'Kaylene K.',
       role: 'Two Sides of the Story',
+      roleLink: 'https://www.tiktok.com/@twosidesofthestory_',
       metric: '2.4M views · 60 day run',
       initial: 'K',
     },
@@ -1510,7 +1511,7 @@ function Results() {
                 <div className="review-avatar">{r.initial}</div>
                 <div>
                   <div className="review-name">{r.name}</div>
-                  <div className="review-role">{r.role}</div>
+                  <div className="review-role">{r.roleLink ? <a href={r.roleLink} target="_blank" rel="noopener noreferrer" style={{ color: 'var(--accent)', textDecoration: 'none' }}>{r.role}</a> : r.role}</div>
                 </div>
               </div>
             </div>
