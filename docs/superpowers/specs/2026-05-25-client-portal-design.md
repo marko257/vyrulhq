@@ -18,6 +18,7 @@ A fully functional V1 client portal for VyrulHQ — a managed short-form content
 |---|---|---|
 | Framework | Next.js 14 (App Router) | Vercel-native, server components, API routes, file-based routing |
 | Hosting | Vercel | Already used for marketing site |
+| Domain | hub.vyrulhq.com | Subdomain of vyrulhq.com, pointed to Vercel via CNAME |
 | Database | Supabase (Postgres) | Already chosen infrastructure |
 | Auth | Supabase Auth + Google OAuth | Invite-only, no password management |
 | File Storage | Supabase Storage | Footage uploads + clip delivery |
