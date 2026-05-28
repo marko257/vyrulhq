@@ -1,11 +1,12 @@
 .claude/
 .superpowers/
+.obsidian/
 Sessions/
 02 Projects/
 knowledge/
+docs/
+tools/
 CLAUDE.md
 .DS_Store
 .vercel
-tools/podcast-prospector/.env
-tools/podcast-prospector/prospects.csv
 prospects.csv

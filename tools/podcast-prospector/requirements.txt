@@ -1,5 +1,0 @@
-requests==2.31.0
-google-api-python-client==2.118.0
-python-dotenv==1.0.1
-click==8.1.7
-pytest==8.1.1
