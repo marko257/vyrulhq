@@ -1387,6 +1387,7 @@ function Nav() {
           <Logo />
           <nav className="nav-links" aria-label="Primary">
             <a href="#how">How It Works</a>
+            <a href="#portal">Portal</a>
             <a href="#results">Results</a>
             <a href="#faq">FAQ</a>
           </nav>
@@ -1407,6 +1408,7 @@ function Nav() {
       <div className={`mobile-menu${menuOpen ? ' open' : ''}`} aria-hidden={!menuOpen}>
         <nav>
           <a href="#how" onClick={closeMenu}>How It Works</a>
+          <a href="#portal" onClick={closeMenu}>Portal</a>
           <a href="#results" onClick={closeMenu}>Results</a>
           <a href="#faq" onClick={closeMenu}>FAQ</a>
         </nav>
@@ -1786,7 +1788,7 @@ function PortalPreview() {
   );
 
   return (
-    <section className="section-pad portal-section" style={{ background: 'var(--bg-2)' }}>
+    <section className="section-pad portal-section" id="portal" style={{ background: 'var(--bg-2)' }}>
       <div className="section-inner">
         <div className="portal-lead">
           <div>
