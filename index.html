@@ -575,6 +575,117 @@ section { position: relative; }
   .steps::before { display: none; }
 }
 
+/* ---- Portal Preview ---- */
+.portal-section { overflow: hidden; }
+.portal-section .section-inner { max-width: 1100px; margin: 0 auto; padding: 0 var(--pad-x); }
+.portal-lead { display: flex; justify-content: space-between; align-items: flex-end; gap: 40px; flex-wrap: wrap; margin-bottom: 48px; }
+.portal-lead p { color: var(--fg-2); font-size: 16px; max-width: 44ch; }
+.portal-tabs { display: flex; gap: 6px; margin-bottom: 20px; }
+.portal-tab {
+  padding: 8px 18px; border-radius: 8px; border: 1px solid var(--line-2);
+  background: transparent; color: var(--fg-2); font-size: 13.5px; font-weight: 500;
+  cursor: pointer; font-family: inherit; transition: all 150ms;
+}
+.portal-tab:hover { color: var(--fg-1); border-color: var(--fg-3); }
+.portal-tab.active { background: var(--accent); color: var(--accent-ink); border-color: var(--accent); }
+.portal-browser {
+  border-radius: 12px; overflow: hidden;
+  border: 1px solid rgba(255,255,255,0.08);
+  box-shadow: 0 40px 80px rgba(0,0,0,0.5), 0 0 0 1px rgba(255,255,255,0.04);
+  background: #f5f5f7;
+}
+.portal-chrome {
+  background: #e8e8ed; padding: 10px 16px;
+  display: flex; align-items: center; gap: 12px;
+}
+.portal-dots { display: flex; gap: 6px; }
+.portal-dot { width: 12px; height: 12px; border-radius: 50%; }
+.portal-dot.red { background: #ff5f57; }
+.portal-dot.yellow { background: #febc2e; }
+.portal-dot.green { background: #28c840; }
+.portal-urlbar {
+  flex: 1; background: #fff; border-radius: 6px;
+  padding: 4px 12px; font-size: 12px; color: #666;
+  display: flex; align-items: center; gap: 6px;
+  max-width: 320px; margin: 0 auto;
+}
+.portal-urlbar svg { width: 12px; height: 12px; flex-shrink: 0; }
+.portal-body {
+  background: #fff; height: 540px; overflow: hidden;
+  display: flex;
+}
+/* portal sidebar */
+.p-sidebar {
+  width: 200px; flex-shrink: 0; border-right: 1px solid #e8e8ed;
+  padding: 20px 0; display: flex; flex-direction: column; gap: 2px;
+}
+.p-sidebar-logo {
+  padding: 0 16px 16px; font-weight: 700; font-size: 14px; color: #111;
+  border-bottom: 1px solid #e8e8ed; margin-bottom: 8px;
+}
+.p-sidebar-logo span { color: #16a34a; }
+.p-nav-item {
+  padding: 8px 16px; font-size: 13px; color: #555; cursor: pointer;
+  display: flex; align-items: center; gap: 8px; border-radius: 0;
+  transition: background 100ms;
+}
+.p-nav-item:hover { background: #f5f5f7; }
+.p-nav-item.active { background: #f0fdf4; color: #16a34a; font-weight: 500; }
+.p-nav-icon { width: 16px; height: 16px; opacity: 0.7; }
+.p-nav-item.active .p-nav-icon { opacity: 1; }
+/* portal main */
+.p-main { flex: 1; padding: 28px 32px; overflow: hidden; background: #fff; }
+.p-eyebrow { font-size: 10px; letter-spacing: .1em; text-transform: uppercase; color: #999; margin-bottom: 6px; }
+.p-title { font-size: 28px; font-weight: 700; color: #111; letter-spacing: -0.02em; margin-bottom: 4px; }
+.p-title .hi { color: #16a34a; }
+.p-subtitle { font-size: 13px; color: #555; margin-bottom: 22px; }
+.p-subtitle b { color: #111; }
+.p-stat-row { display: grid; grid-template-columns: repeat(4,1fr); gap: 12px; margin-bottom: 22px; }
+.p-stat { border: 1px solid #e8e8ed; border-radius: 8px; padding: 14px; }
+.p-stat-label { font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: #999; margin-bottom: 6px; }
+.p-stat-val { font-size: 20px; font-weight: 700; color: #111; }
+.p-stat-sub { font-size: 10px; color: #999; margin-top: 2px; }
+.p-section-label { font-size: 9px; text-transform: uppercase; letter-spacing: .1em; color: #999; margin-bottom: 10px; padding-bottom: 6px; border-bottom: 1px solid #e8e8ed; }
+.p-jump-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 10px; }
+.p-jump-card { border: 1px solid #e8e8ed; border-radius: 8px; padding: 12px; cursor: pointer; transition: border-color 150ms; }
+.p-jump-card:hover { border-color: #16a34a; }
+.p-jump-card.active { border-color: #16a34a; background: #f0fdf4; }
+.p-jump-icon { width: 28px; height: 28px; border-radius: 6px; background: #f0fdf4; display: flex; align-items: center; justify-content: center; margin-bottom: 8px; font-size: 14px; }
+.p-jump-card.active .p-jump-icon { background: #16a34a; }
+.p-jump-name { font-size: 12px; font-weight: 600; color: #111; }
+.p-jump-desc { font-size: 10px; color: #999; margin-top: 2px; }
+/* calendar screen */
+.p-cal-nav { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; }
+.p-cal-nav-btn { width: 26px; height: 26px; border: 1px solid #e8e8ed; border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 12px; color: #555; cursor: pointer; background: #fff; font-family: inherit; }
+.p-cal-month { font-size: 16px; font-weight: 700; color: #111; }
+.p-cal-today { margin-left: 4px; padding: 4px 10px; border: 1px solid #e8e8ed; border-radius: 6px; font-size: 11px; color: #555; background: #fff; cursor: pointer; font-family: inherit; }
+.p-cal-views { display: flex; gap: 4px; margin-left: auto; }
+.p-cal-view { padding: 4px 10px; border-radius: 6px; font-size: 11px; cursor: pointer; border: none; background: transparent; color: #555; font-family: inherit; }
+.p-cal-view.active { background: #16a34a; color: #fff; }
+.p-cal-grid { display: grid; grid-template-columns: repeat(7,1fr); border: 1px solid #e8e8ed; border-radius: 8px; overflow: hidden; }
+.p-cal-dow { font-size: 9px; text-transform: uppercase; letter-spacing: .08em; color: #999; padding: 6px 8px; background: #fafafa; border-bottom: 1px solid #e8e8ed; text-align: center; }
+.p-cal-cell { border-right: 1px solid #e8e8ed; border-bottom: 1px solid #e8e8ed; padding: 5px 6px; min-height: 72px; vertical-align: top; }
+.p-cal-cell:nth-child(7n) { border-right: none; }
+.p-cal-day { font-size: 11px; font-weight: 600; color: #111; margin-bottom: 3px; }
+.p-clip-chip { display: flex; align-items: center; gap: 4px; background: #f5f5f7; border-radius: 4px; padding: 2px 5px; margin-bottom: 2px; cursor: pointer; }
+.p-clip-chip:hover { background: #e8e8ed; }
+.p-clip-thumb { width: 18px; height: 18px; border-radius: 2px; background: #ddd; flex-shrink: 0; object-fit: cover; }
+.p-clip-title { font-size: 9px; color: #333; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; max-width: 90px; }
+.p-clip-views { font-size: 8px; color: #999; white-space: nowrap; }
+/* strategy screen */
+.p-strategy-card { border: 1px solid #e8e8ed; border-radius: 8px; padding: 14px 16px; margin-bottom: 10px; }
+.p-strategy-head { display: flex; align-items: center; gap: 8px; margin-bottom: 10px; }
+.p-strategy-icon { width: 26px; height: 26px; border-radius: 6px; background: #f0fdf4; display: flex; align-items: center; justify-content: center; font-size: 13px; }
+.p-strategy-title { font-size: 13px; font-weight: 600; color: #111; }
+.p-strategy-items { display: flex; flex-direction: column; gap: 6px; }
+.p-strategy-item { font-size: 11.5px; color: #444; display: flex; gap: 6px; }
+.p-strategy-item::before { content: '•'; color: #16a34a; flex-shrink: 0; }
+
+@media (max-width: 800px) {
+  .portal-browser { display: none; }
+  .p-stat-row { grid-template-columns: repeat(2,1fr); }
+}
+
 /* ---- Results ---- */
 .results-head {
   display: flex; justify-content: space-between; align-items: end;
@@ -1455,6 +1566,188 @@ function HowItWorks() {
   );
 }
 
+// ── Portal Preview ────────────────────────────────────────────────────────────
+function PortalPreview() {
+  const [tab, setTab] = React.useState('dashboard');
+
+  const LockIcon = () => <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2"><rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/></svg>;
+
+  const NavItems = ({ active }) => (
+    <div className="p-sidebar">
+      <div className="p-sidebar-logo">VYRUL<span>HQ</span></div>
+      {[
+        { id:'dashboard', icon:'◻', label:'Dashboard' },
+        { id:'calendar', icon:'▦', label:'Calendar' },
+        { id:'clips', icon:'▶', label:'Clips' },
+        { id:'submit', icon:'↑', label:'Submit footage' },
+        { id:'messages', icon:'◯', label:'Messages' },
+        { id:'strategy', icon:'↗', label:'Strategy' },
+      ].map(n => (
+        <div key={n.id} className={`p-nav-item${active===n.id?' active':''}`}>
+          <span className="p-nav-icon">{n.icon}</span>{n.label}
+        </div>
+      ))}
+    </div>
+  );
+
+  const DashboardScreen = () => (
+    <div className="p-main">
+      <div className="p-eyebrow">VYRULHQ · SCALE PLAN</div>
+      <div className="p-title">Hey <span className="hi">Marko.</span></div>
+      <div className="p-subtitle">You've got <b>503.1K views</b> across <b>60 clips</b> in the last 30 days. Strongest on <b>TikTok</b>.</div>
+      <div className="p-stat-row">
+        <div className="p-stat"><div className="p-stat-label">Total Views</div><div className="p-stat-val">503.1K</div><div className="p-stat-sub">Last 30 days</div></div>
+        <div className="p-stat"><div className="p-stat-label">Clips Published</div><div className="p-stat-val">60</div><div className="p-stat-sub">Last 30 days</div></div>
+        <div className="p-stat"><div className="p-stat-label">🎵 Top Platform</div><div className="p-stat-val">TikTok</div><div className="p-stat-sub">By view share</div></div>
+        <div className="p-stat"><div className="p-stat-label">Posting Days</div><div className="p-stat-val">27</div><div className="p-stat-sub">of last 30</div></div>
+      </div>
+      <div className="p-section-label">JUMP TO</div>
+      <div className="p-jump-grid">
+        {[
+          { id:'cal', icon:'📅', name:'Calendar', desc:'What we\'ve posted and what\'s coming', active:true },
+          { id:'clips', icon:'🎞', name:'Clips', desc:'Your full clip library' },
+          { id:'submit', icon:'📤', name:'Submit footage', desc:'Send us raw video' },
+          { id:'msg', icon:'💬', name:'Messages', desc:'Talk to your account manager' },
+        ].map(c => (
+          <div key={c.id} className={`p-jump-card${c.active?' active':''}`}>
+            <div className="p-jump-icon">{c.icon}</div>
+            <div className="p-jump-name">{c.name}</div>
+            <div className="p-jump-desc">{c.desc}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+
+  const CalendarScreen = () => {
+    const days = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+    const cells = [
+      { d:26, clips:[{t:'Does your partner...',v:'752'},  {t:'Are dating apps ma...',v:'464'}] },
+      { d:27, clips:[{t:'Does your partner...',v:'1,225'},{t:'How do you get yo...',v:'527'},{t:'What do you think...',v:'1,421'}] },
+      { d:28, clips:[{t:'What would you do...',v:'1,441'},{t:'My engagement rin...',v:'1,445'},{t:'Do you want kids o...',v:'838'}] },
+      { d:29, clips:[{t:'My sister in law ask...',v:'22,276'},{t:'At what point does...',v:'428,106'},{t:'Would you move se...',v:'467'}] },
+      { d:30, clips:[{t:'Would you move se...',v:'1,318'},{t:'TSOTS Ep 1',v:'0'}] },
+      { d:1,  clips:[{t:'The two biggest lie...',v:'12,796'},{t:'Who should pay for...',v:'453'},{t:'Would you cover a...',v:'1,615'}] },
+      { d:2,  clips:[{t:'Who should pay for...',v:'1,311'},{t:'The two biggest lie...',v:'1,905'},{t:'My 3 rules for dati...',v:'401'}] },
+    ];
+    return (
+      <div className="p-main" style={{ padding: '20px 24px' }}>
+        <div className="p-eyebrow">VYRULHQ · SCHEDULE</div>
+        <div className="p-title" style={{ fontSize: 22, marginBottom: 2 }}>Calendar.</div>
+        <div className="p-subtitle" style={{ marginBottom: 12 }}>What we've posted, what's coming next, and what we need from you.</div>
+        <div className="p-cal-nav">
+          <button className="p-cal-nav-btn">‹</button>
+          <span className="p-cal-month">May 2026</span>
+          <button className="p-cal-nav-btn">›</button>
+          <button className="p-cal-today">Today</button>
+          <div className="p-cal-views">
+            <button className="p-cal-view active">Month</button>
+            <button className="p-cal-view">Week</button>
+            <button className="p-cal-view">Agenda</button>
+          </div>
+        </div>
+        <div className="p-cal-grid">
+          {days.map(d => <div key={d} className="p-cal-dow">{d}</div>)}
+          {cells.map((c,i) => (
+            <div key={i} className="p-cal-cell">
+              <div className="p-cal-day">{c.d}</div>
+              {c.clips.slice(0,2).map((cl,j) => (
+                <div key={j} className="p-clip-chip">
+                  <div className="p-clip-thumb" style={{ background: `hsl(${(i*40+j*70)%360},30%,75%)` }} />
+                  <div>
+                    <div className="p-clip-title">{cl.t}</div>
+                    <div className="p-clip-views">{cl.v} views</div>
+                  </div>
+                </div>
+              ))}
+              {c.clips.length > 2 && <div style={{ fontSize:9, color:'#999', paddingLeft:4 }}>+{c.clips.length-2} more</div>}
+            </div>
+          ))}
+        </div>
+      </div>
+    );
+  };
+
+  const StrategyScreen = () => (
+    <div className="p-main" style={{ overflowY: 'auto', height: '100%' }}>
+      <div className="p-eyebrow">VYRULHQ · DIRECTION</div>
+      <div className="p-title" style={{ fontSize: 22, marginBottom: 2 }}>Strategy.</div>
+      <div className="p-subtitle" style={{ marginBottom: 16 }}>Your current content direction — formats we're leaning into, hooks we're testing, themes ahead.<br/><span style={{ color:'#999', fontSize:11 }}>Last updated May 28, 2026</span></div>
+      {[
+        { icon:'🎯', title:'Active formats', items:[
+          '90-second \'relationship hot take\' clip where you challenge a popular dating belief from a guest, ending with their unexpected counter-argument',
+          '60-second \'worst advice I ever got\' story extraction where guest shares a specific dating disaster that came from following bad advice',
+          '45-second \'green flag/red flag breakdown\' where you or a guest rapidly lists specific behaviors with quick explanations',
+        ]},
+        { icon:'⚡', title:'Hook angles', items:[
+          '\'The reason your relationships keep failing has nothing to do with them\' — targets self-reflection seekers',
+          '\'She told me the one thing men do that instantly kills attraction\' — curiosity gap plus gender dynamics tension',
+          '\'I stayed 10 years too long because of this lie\' — regret-based storytelling that promises hard-won wisdom',
+          '\'Stop asking if they like you. Ask this instead\' — reframe hook that promises a tactical upgrade',
+        ]},
+        { icon:'📈', title:'Upcoming themes', items:[
+          '\'Modern Dating Dysfunction\' — clips exposing how apps, texting culture, and situationships have broken traditional relationship progression',
+          '\'What Women Actually Want vs. What They Say\' — controversial but high-engagement content around communication gaps',
+          '\'Marriage Truths Nobody Talks About\' — raw, de-romanticized takes on long-term commitment',
+        ]},
+      ].map((s,i) => (
+        <div key={i} className="p-strategy-card">
+          <div className="p-strategy-head">
+            <div className="p-strategy-icon">{s.icon}</div>
+            <div className="p-strategy-title">{s.title}</div>
+          </div>
+          <div className="p-strategy-items">
+            {s.items.map((item,j) => <div key={j} className="p-strategy-item">{item}</div>)}
+          </div>
+        </div>
+      ))}
+    </div>
+  );
+
+  return (
+    <section className="section-pad portal-section">
+      <div className="section-inner">
+        <div className="portal-lead">
+          <div>
+            <div className="eyebrow" style={{ marginBottom: 22 }}>The Portal</div>
+            <h2>Your client portal.<br />No other agency has this.</h2>
+          </div>
+          <p>Every client gets a private dashboard — live view counts, your full clip library, the content calendar, direct messaging with your account manager, and the strategy behind your account. All in one place.</p>
+        </div>
+        <div className="portal-tabs">
+          {[
+            { id:'dashboard', label:'Dashboard' },
+            { id:'calendar', label:'Calendar' },
+            { id:'strategy', label:'Strategy' },
+          ].map(t => (
+            <button key={t.id} className={`portal-tab${tab===t.id?' active':''}`} onClick={() => setTab(t.id)}>
+              {t.label}
+            </button>
+          ))}
+        </div>
+        <div className="portal-browser">
+          <div className="portal-chrome">
+            <div className="portal-dots">
+              <div className="portal-dot red" />
+              <div className="portal-dot yellow" />
+              <div className="portal-dot green" />
+            </div>
+            <div className="portal-urlbar">
+              <LockIcon /><span>hub.vyrulhq.com</span>
+            </div>
+          </div>
+          <div className="portal-body">
+            <NavItems active={tab === 'calendar' ? 'calendar' : tab === 'strategy' ? 'strategy' : 'dashboard'} />
+            {tab === 'dashboard' && <DashboardScreen />}
+            {tab === 'calendar' && <CalendarScreen />}
+            {tab === 'strategy' && <StrategyScreen />}
+          </div>
+        </div>
+      </div>
+    </section>
+  );
+}
+
 // ── Results ───────────────────────────────────────────────────────────────────
 function Results() {
   const [thumbnails, setThumbnails] = React.useState({});
@@ -1792,6 +2085,7 @@ function App() {
       <WhatWeDo />
       <WhoItsFor />
       <HowItWorks />
+      <PortalPreview />
       <Results />
       <Packages />
       <FAQ />
